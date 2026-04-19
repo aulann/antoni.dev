@@ -144,6 +144,15 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
     if (timeoutDone) setMatrix(currentMatrix);
   }, [currentMatrix, timeoutDone]);
 
+  useEffect(() => {
+    const el = document.getElementById("cert-overlay-keyframes");
+    if (el) return;
+    const style = document.createElement("style");
+    style.id = "cert-overlay-keyframes";
+    style.textContent = overlayAnimations;
+    document.head.appendChild(style);
+  }, []);
+
   return (
     <div
       ref={ref}
@@ -152,7 +161,6 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
       onMouseLeave={onMouseLeave}
       style={{ perspective: "700px" }}
     >
-      <style>{overlayAnimations}</style>
       <div
         style={{
           transform: `matrix3d(${matrix})`,

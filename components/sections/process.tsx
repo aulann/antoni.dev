@@ -30,31 +30,22 @@ export function Process() {
             orientation="vertical"
           >
             <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
-              {/* Left — step nav */}
               <StepperNav className="flex-col gap-0">
                 {processSteps.map((step, i) => (
                   <StepperItem key={step.number} step={i + 1} className="flex-col items-stretch">
                     <StepperTrigger className="group w-full rounded-xl px-4 py-5 text-left transition-colors hover:bg-muted/40 data-[state=active]:bg-muted/50">
                       <div className="flex items-center gap-4">
-                        {/* Number badge */}
                         <span className="font-heading tabular-nums text-xs font-semibold tracking-widest text-muted-foreground/40 transition-colors group-data-[state=active]:text-accent">
                           {step.number}
                         </span>
-
-                        {/* Separator line */}
                         <span className="h-px flex-1 bg-border/40 transition-colors group-data-[state=active]:bg-accent/40" />
-
-                        {/* Title */}
                         <span className="font-heading text-base font-medium tracking-tight text-muted-foreground transition-colors group-data-[state=active]:text-foreground">
                           {step.title}
                         </span>
-
-                        {/* Active dot */}
                         <span className="ml-1 size-1.5 rounded-full bg-transparent transition-colors group-data-[state=active]:bg-accent" />
                       </div>
                     </StepperTrigger>
 
-                    {/* Connector between items */}
                     {i < processSteps.length - 1 && (
                       <div className="mx-4 h-px bg-border/30" />
                     )}
@@ -62,7 +53,6 @@ export function Process() {
                 ))}
               </StepperNav>
 
-              {/* Right — content */}
               <StepperPanel>
                 {processSteps.map((step, i) => (
                   <StepperContent key={step.number} value={i + 1}>
@@ -115,7 +105,6 @@ function ContentCard({ step, index }: { step: (typeof processSteps)[0]; index: n
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="flex h-full flex-col gap-6 rounded-2xl border border-border/40 bg-muted/20 p-8 md:p-10"
       >
-        {/* Step number — large */}
         <span className="font-heading text-7xl font-semibold leading-none tracking-tight text-muted-foreground/10 select-none">
           {step.number}
         </span>
@@ -130,7 +119,6 @@ function ContentCard({ step, index }: { step: (typeof processSteps)[0]; index: n
           </p>
         </div>
 
-        {/* Progress dots */}
         <div className="mt-auto flex items-center gap-1.5 pt-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <span

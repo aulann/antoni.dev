@@ -93,7 +93,8 @@ export default function RootLayout({
       <body className="min-h-dvh bg-background text-foreground antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
+          storageKey="ap-theme"
           enableSystem={false}
           disableTransitionOnChange
         >

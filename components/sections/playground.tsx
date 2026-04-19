@@ -16,7 +16,6 @@ export function Playground() {
     <section id="lab" className="border-t border-border/40 py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
 
-        {/* Header */}
         <div ref={ref} className="mb-16 flex flex-col gap-3">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
@@ -44,7 +43,6 @@ export function Playground() {
           </motion.p>
         </div>
 
-        {/* Cards — stacked vertically, full width */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

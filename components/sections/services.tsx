@@ -5,7 +5,6 @@ import { motion, AnimatePresence, useInView } from "motion/react";
 import * as Ph from "@phosphor-icons/react";
 import { services } from "@/lib/content/services";
 
-// Per-service accent colour
 const ACCENT: Record<string, string> = {
   landing:     "#38bdf8",
   webapp:      "#818cf8",
@@ -15,7 +14,6 @@ const ACCENT: Record<string, string> = {
   maintenance: "#94a3b8",
 };
 
-// Grid col-span overrides (3-col grid)
 const COL_SPAN: Record<string, string> = {
   landing:     "md:col-span-2",
   maintenance: "md:col-span-3",
@@ -74,10 +72,7 @@ function ServiceCard({
         boxShadow: selected ? `0 0 0 1px ${rgba(color, 0.25)}, 0 8px 30px ${rgba(color, 0.1)}` : "none",
       }}
     >
-      {/* Static tint */}
       <div className="pointer-events-none absolute inset-0" style={{ background: rgba(color, 0.03) }} />
-
-      {/* Mouse-tracking glow */}
       <div
         className="pointer-events-none absolute inset-0 transition-opacity duration-300"
         style={{
@@ -86,10 +81,7 @@ function ServiceCard({
         }}
       />
 
-      {/* Content */}
       <div className={`relative flex flex-1 flex-col gap-4 p-6 ${isFeatured ? "md:p-8" : ""} ${isWide ? "md:flex-row md:flex-wrap md:items-start md:gap-6 md:p-7" : ""}`}>
-
-        {/* Top row */}
         <div className={`flex items-start justify-between ${isWide ? "md:w-full" : ""}`}>
           <div
             className="flex size-10 shrink-0 items-center justify-center rounded-xl border"
@@ -128,7 +120,6 @@ function ServiceCard({
           </div>
         </div>
 
-        {/* Title + description */}
         <div className={`flex flex-col gap-1.5 ${isWide ? "md:flex-1 md:min-w-45" : ""}`}>
           <h3 className="font-heading text-lg font-medium leading-snug tracking-tight">
             {service.title}
@@ -138,7 +129,6 @@ function ServiceCard({
           </p>
         </div>
 
-        {/* Deliverables — featured: always, wide: always horizontal, others: hover-reveal */}
         {isFeatured && (
           <ul className="grid gap-1.5 sm:grid-cols-2">
             {service.deliverables.map((d) => (
@@ -173,7 +163,6 @@ function ServiceCard({
         )}
       </div>
 
-      {/* Big faded number */}
       <span className="pointer-events-none absolute bottom-3 right-5 select-none font-heading text-8xl font-black leading-none opacity-[0.035]">
         {num}
       </span>
@@ -241,7 +230,6 @@ export function Services() {
     <section id="uslugi" className="border-t border-border/40 py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
 
-        {/* Header */}
         <div ref={ref} className="mb-16 flex flex-col gap-3">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
@@ -271,7 +259,6 @@ export function Services() {
           </motion.p>
         </div>
 
-        {/* Bento grid */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   motion,
   useInView,
@@ -12,7 +13,6 @@ import {
 import * as PhosphorIcons from "@phosphor-icons/react";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import Image from "next/image";
-import Link from "next/link";
 import { projects, capabilities, type Project } from "@/lib/content/projects";
 
 export function Projects() {
@@ -100,6 +100,7 @@ function MockUI({
 }
 
 function ProjectCard({ project }: { project: Project }) {
+  const router = useRouter();
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
@@ -135,17 +136,16 @@ function ProjectCard({ project }: { project: Project }) {
   };
 
   return (
-    <Link href={`/projects/${project.slug}`} className="block h-full">
     <motion.div
       ref={cardRef}
+      onClick={() => router.push(`/projects/${project.slug}`)}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX: springX, rotateY: springY, transformPerspective: 800 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm"
+      className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm"
       data-cursor="interactive"
     >
-      {/* Preview */}
       <div
         className="relative h-52 overflow-hidden"
         style={
@@ -206,7 +206,6 @@ function ProjectCard({ project }: { project: Project }) {
         )}
       </div>
 
-      {/* Content */}
       <div className="flex flex-1 flex-col gap-4 p-6">
         <div className="flex flex-col gap-1.5">
           <h3 className="font-heading text-lg font-medium tracking-tight">{project.name}</h3>
@@ -239,7 +238,6 @@ function ProjectCard({ project }: { project: Project }) {
         )}
       </div>
     </motion.div>
-    </Link>
   );
 }
 

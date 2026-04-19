@@ -78,7 +78,6 @@ export function Contact() {
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <div ref={ref} className="grid gap-16 lg:grid-cols-2 lg:gap-24 lg:items-stretch">
 
-          {/* Left — header + channels */}
           <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-3">
               <motion.span
@@ -108,7 +107,6 @@ export function Contact() {
               </motion.p>
             </div>
 
-            {/* Channels */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -134,7 +132,6 @@ export function Contact() {
             </motion.div>
           </div>
 
-          {/* Right — form */}
           <motion.form
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
