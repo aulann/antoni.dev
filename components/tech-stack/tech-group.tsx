@@ -23,7 +23,6 @@ export function TechGroupRow({ group }: { group: TechGroup }) {
       className="border-b border-border/40 py-10 last:border-0 md:py-14"
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[240px_1fr] lg:gap-16">
-        {/* Left: group info */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -44,7 +43,6 @@ export function TechGroupRow({ group }: { group: TechGroup }) {
           />
         </motion.div>
 
-        {/* Right: brand icons */}
         <div className="flex flex-wrap items-start gap-x-6 gap-y-10 pt-1 pl-4 lg:pl-8">
           {group.items.map((item, i) => (
             <motion.div

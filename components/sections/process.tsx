@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "motion/react";
 import { processSteps } from "@/lib/content/process";
+import { RadialScrollGallery } from "@/components/ui/portfolio-and-image-gallery";
 import {
   Stepper,
   StepperItem,
@@ -11,60 +12,131 @@ import {
   StepperPanel,
   StepperContent,
 } from "@/components/ui/stepper";
+import { Check } from "lucide-react";
+
+// Top of the wheel = index 3 in CSS circle coords, so rotate array so step01 lands there
+const orderedSteps = [...processSteps.slice(1), processSteps[0]];
 
 export function Process() {
+  return (
+    <section id="proces" className="border-t border-border/40 py-24 md:pt-32 md:pb-0">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <Header />
+      </div>
+
+      {/* Mobile: stepper */}
+      <div className="md:hidden mx-auto max-w-6xl px-5 mt-16">
+        <MobileStepper />
+      </div>
+
+      {/* Desktop: radial scroll gallery */}
+      <div className="hidden md:block">
+        <RadialScrollGallery
+          baseRadius={580}
+          mobileRadius={580}
+          scrollDuration={2000}
+          visiblePercentage={48}
+        >
+          {(hoveredIndex) =>
+            orderedSteps.map((item, index) => {
+              const isActive = hoveredIndex === index;
+              return (
+                <div
+                  key={item.number}
+                  className={`
+                    w-56 h-80 sm:w-64 sm:h-96
+                    rounded-2xl border p-6 flex flex-col gap-4 items-start
+                    transition-all duration-500
+                    ${
+                      isActive
+                        ? "bg-primary border-primary text-primary-foreground shadow-2xl"
+                        : "bg-card border-border text-card-foreground opacity-55 scale-90"
+                    }
+                  `}
+                >
+                  <div className="w-full flex justify-between items-center">
+                    <span
+                      className={`font-mono text-xs tracking-widest ${
+                        isActive ? "text-primary-foreground/50" : "text-muted-foreground/50"
+                      }`}
+                    >
+                      {item.number}
+                    </span>
+                    {isActive && <Check className="w-4 h-4 text-primary-foreground/70" />}
+                  </div>
+
+                  <div className="flex-1 flex flex-col gap-3">
+                    <h3 className="text-2xl font-bold leading-tight tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p
+                      className={`text-sm font-medium ${
+                        isActive ? "text-primary-foreground/80" : "text-foreground/70"
+                      }`}
+                    >
+                      {item.body}
+                    </p>
+                    <p
+                      className={`text-xs leading-relaxed ${
+                        isActive ? "text-primary-foreground/60" : "text-muted-foreground"
+                      }`}
+                    >
+                      {item.detail}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`h-0.5 w-full rounded-full ${
+                      isActive ? "bg-primary-foreground/20" : "bg-border"
+                    }`}
+                  />
+                </div>
+              );
+            })
+          }
+        </RadialScrollGallery>
+      </div>
+    </section>
+  );
+}
+
+function MobileStepper() {
   const [activeStep, setActiveStep] = useState(1);
 
   return (
-    <section
-      id="proces"
-      className="border-t border-border/40 py-24 md:py-32"
-    >
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
-        <Header />
+    <Stepper value={activeStep} onValueChange={setActiveStep} orientation="vertical">
+      <div className="grid grid-cols-1 gap-8">
+        <StepperNav className="flex-col gap-0">
+          {processSteps.map((step, i) => (
+            <StepperItem key={step.number} step={i + 1} className="flex-col items-stretch">
+              <StepperTrigger className="group w-full rounded-xl px-4 py-5 text-left transition-colors hover:bg-muted/40 data-[state=active]:bg-muted/50">
+                <div className="flex items-center gap-4">
+                  <span className="font-heading tabular-nums text-xs font-semibold tracking-widest text-muted-foreground/40 transition-colors group-data-[state=active]:text-accent">
+                    {step.number}
+                  </span>
+                  <span className="h-px flex-1 bg-border/40 transition-colors group-data-[state=active]:bg-accent/40" />
+                  <span className="font-heading text-base font-medium tracking-tight text-muted-foreground transition-colors group-data-[state=active]:text-foreground">
+                    {step.title}
+                  </span>
+                  <span className="ml-1 size-1.5 rounded-full bg-transparent transition-colors group-data-[state=active]:bg-accent" />
+                </div>
+              </StepperTrigger>
+              {i < processSteps.length - 1 && (
+                <div className="mx-4 h-px bg-border/30" />
+              )}
+            </StepperItem>
+          ))}
+        </StepperNav>
 
-        <div className="mt-16 md:mt-24">
-          <Stepper
-            value={activeStep}
-            onValueChange={setActiveStep}
-            orientation="vertical"
-          >
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
-              <StepperNav className="flex-col gap-0">
-                {processSteps.map((step, i) => (
-                  <StepperItem key={step.number} step={i + 1} className="flex-col items-stretch">
-                    <StepperTrigger className="group w-full rounded-xl px-4 py-5 text-left transition-colors hover:bg-muted/40 data-[state=active]:bg-muted/50">
-                      <div className="flex items-center gap-4">
-                        <span className="font-heading tabular-nums text-xs font-semibold tracking-widest text-muted-foreground/40 transition-colors group-data-[state=active]:text-accent">
-                          {step.number}
-                        </span>
-                        <span className="h-px flex-1 bg-border/40 transition-colors group-data-[state=active]:bg-accent/40" />
-                        <span className="font-heading text-base font-medium tracking-tight text-muted-foreground transition-colors group-data-[state=active]:text-foreground">
-                          {step.title}
-                        </span>
-                        <span className="ml-1 size-1.5 rounded-full bg-transparent transition-colors group-data-[state=active]:bg-accent" />
-                      </div>
-                    </StepperTrigger>
-
-                    {i < processSteps.length - 1 && (
-                      <div className="mx-4 h-px bg-border/30" />
-                    )}
-                  </StepperItem>
-                ))}
-              </StepperNav>
-
-              <StepperPanel>
-                {processSteps.map((step, i) => (
-                  <StepperContent key={step.number} value={i + 1}>
-                    <ContentCard step={step} index={i} />
-                  </StepperContent>
-                ))}
-              </StepperPanel>
-            </div>
-          </Stepper>
-        </div>
+        <StepperPanel>
+          {processSteps.map((step, i) => (
+            <StepperContent key={step.number} value={i + 1}>
+              <ContentCard step={step} index={i} />
+            </StepperContent>
+          ))}
+        </StepperPanel>
       </div>
-    </section>
+    </Stepper>
   );
 }
 
@@ -124,11 +196,7 @@ function ContentCard({ step, index }: { step: (typeof processSteps)[0]; index: n
             <span
               key={i}
               className={`h-1 rounded-full transition-all duration-300 ${
-                i === index
-                  ? "w-6 bg-accent"
-                  : i < index
-                  ? "w-2 bg-accent/30"
-                  : "w-2 bg-border"
+                i === index ? "w-6 bg-accent" : i < index ? "w-2 bg-accent/30" : "w-2 bg-border"
               }`}
             />
           ))}

@@ -4,6 +4,7 @@ import { useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import * as Ph from "@phosphor-icons/react";
 import { services } from "@/lib/content/services";
+import { Radar, IconContainer } from "@/components/ui/radar-effect";
 
 const ACCENT: Record<string, string> = {
   landing:     "#38bdf8",
@@ -26,6 +27,63 @@ function rgba(hex: string, a: number) {
   return `rgba(${r},${g},${b},${a})`;
 }
 
+// ── Radar tile view ────────────────────────────────────────────────
+function RadarServiceIcon({ id, delay, onSelect }: { id: string; delay: number; onSelect: (id: string) => void }) {
+  const svc = services.find((s) => s.id === id)!;
+  const color = ACCENT[id] ?? "#38bdf8";
+  const Icon = (Ph[svc.icon as keyof typeof Ph] ?? Ph.Question) as React.ElementType;
+  return (
+    <IconContainer
+      text={svc.title.split(" ")[0]}
+      delay={delay}
+      onClick={() => onSelect(id)}
+      accent={color}
+      icon={<Icon size={22} weight="duotone" style={{ color }} />}
+    />
+  );
+}
+
+// Absolute positions (% from top/left of container) — matching screenshot scatter
+const POSITIONS: Record<string, { top: string; left?: string; right?: string }> = {
+  landing:     { top: "22%", left: "8%" },
+  webapp:      { top: "4%",  left: "41%" },
+  portfolio:   { top: "22%", right: "8%" },
+  consulting:  { top: "50%", left: "18%" },
+  hardware:    { top: "50%", right: "18%" },
+  maintenance: { top: "68%", left: "40%" },
+};
+
+function RadarView({ onSelect }: { onSelect: (id: string) => void }) {
+  return (
+    <div className="relative h-120 w-full overflow-hidden">
+      {services.map((svc, i) => {
+        const pos = POSITIONS[svc.id];
+        const color = ACCENT[svc.id] ?? "#38bdf8";
+        const Icon = (Ph[svc.icon as keyof typeof Ph] ?? Ph.Question) as React.ElementType;
+        return (
+          <div
+            key={svc.id}
+            className="absolute"
+            style={{ top: pos.top, left: pos.left, right: pos.right }}
+          >
+            <IconContainer
+              text={svc.title.split(" ")[0]}
+              delay={i * 0.1}
+              onClick={() => onSelect(svc.id)}
+              accent={color}
+              icon={<Icon size={22} weight="duotone" style={{ color }} />}
+            />
+          </div>
+        );
+      })}
+
+      <Radar className="absolute -bottom-12 left-1/2 -translate-x-1/2 z-30" />
+      <div className="absolute bottom-0 z-41 h-px w-full bg-linear-to-r from-transparent via-border to-transparent" />
+    </div>
+  );
+}
+
+// ── Detail card ────────────────────────────────────────────────────
 function ServiceCard({
   service,
   idx,
@@ -170,6 +228,7 @@ function ServiceCard({
   );
 }
 
+// ── Brief bar ──────────────────────────────────────────────────────
 function BriefBar({ selected, onClear }: { selected: string[]; onClear: () => void }) {
   const picked = services.filter((s) => selected.includes(s.id));
   return (
@@ -216,15 +275,20 @@ function BriefBar({ selected, onClear }: { selected: string[]; onClear: () => vo
   );
 }
 
+// ── Main section ───────────────────────────────────────────────────
 export function Services() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
   const [selected, setSelected] = useState<string[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const toggle = useCallback(
     (id: string) => setSelected((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]),
     [],
   );
+
+  const activeService = services.find((s) => s.id === activeId);
+  const activeIdx = services.findIndex((s) => s.id === activeId);
 
   return (
     <section id="uslugi" className="border-t border-border/40 py-24 md:py-32">
@@ -255,26 +319,49 @@ export function Services() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-sm text-muted-foreground"
           >
-            Kliknij usługi które Cię interesują →
+            {activeId ? (
+              <button
+                onClick={() => setActiveId(null)}
+                className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Ph.ArrowLeft size={13} weight="bold" />
+                Wróć do usług
+              </button>
+            ) : (
+              "Kliknij usługę, aby zobaczyć szczegóły →"
+            )}
           </motion.p>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="grid grid-cols-1 gap-3 md:grid-cols-3"
-        >
-          {services.map((service, i) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              idx={i}
-              selected={selected.includes(service.id)}
-              onToggle={() => toggle(service.id)}
-            />
-          ))}
-        </motion.div>
+        <AnimatePresence mode="wait">
+          {activeId && activeService ? (
+            <motion.div
+              key="detail"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="grid grid-cols-1 gap-3 md:grid-cols-3"
+            >
+              <ServiceCard
+                service={activeService}
+                idx={activeIdx}
+                selected={selected.includes(activeId)}
+                onToggle={() => toggle(activeId)}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="radar"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <RadarView onSelect={setActiveId} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <AnimatePresence>

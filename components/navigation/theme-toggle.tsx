@@ -18,7 +18,8 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className="group relative inline-flex size-9 items-center justify-center rounded-full border border-border/70 bg-background/60 text-foreground backdrop-blur transition-colors hover:border-accent hover:text-accent"
-      aria-label={isDark ? "Włącz motyw jasny" : "Włącz motyw ciemny"}
+      aria-label={!mounted ? "Przełącz motyw" : isDark ? "Włącz motyw jasny" : "Włącz motyw ciemny"}
+      suppressHydrationWarning
     >
       <AnimatePresence mode="wait" initial={false}>
         {mounted && (
