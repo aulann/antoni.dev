@@ -11,6 +11,7 @@ export function LenisProvider({ children }: PropsWithChildren) {
         lerp: 0.08,
         duration: 1.2,
         smoothWheel: true,
+        syncTouch: false,
         anchors: true,
       }}
     >

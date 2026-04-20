@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 import { SiCisco, SiComptia } from "@icons-pack/react-simple-icons";
 import { aboutContent } from "@/lib/content/about";
@@ -164,9 +164,25 @@ function Chip({
   inView: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const close = () => setOpen(false);
+    const onTouchStart = (e: TouchEvent) => {
+      if (!ref.current?.contains(e.target as Node)) close();
+    };
+    window.addEventListener("scroll", close, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", close);
+      window.removeEventListener("touchstart", onTouchStart);
+    };
+  }, [open]);
 
   return (
     <motion.div
+      ref={ref}
       className="relative"
       initial={{ opacity: 0, scale: 0.88, y: 8 }}
       animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
@@ -182,8 +198,10 @@ function Chip({
         onMouseLeave={() => setOpen(false)}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
+        onClick={() => setOpen((prev) => !prev)}
         className="inline-flex cursor-default items-center rounded-full border border-border/70 bg-muted/60 px-4 py-1.5 text-sm text-foreground transition-colors hover:border-accent/60 hover:bg-muted hover:text-accent"
         aria-describedby={open ? `chip-tip-${index}` : undefined}
+        aria-expanded={open}
       >
         {chip.label}
       </button>

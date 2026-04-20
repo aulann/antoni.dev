@@ -15,7 +15,9 @@ export function TechStack() {
             <span className="text-accent">AI i automatyzacje.</span>
           </h2>
           <p className="max-w-lg text-sm text-muted-foreground md:text-base">
-            Najedź na ikonę żeby zobaczyć poziom i opis. Każda to kawałek mojego warsztatu.
+            <span className="hidden md:inline">Najedź na ikonę</span>
+            <span className="md:hidden">Dotknij ikonę</span>
+            {" "}żeby zobaczyć poziom i opis. Każda to kawałek mojego warsztatu.
           </p>
         </div>
 

@@ -21,16 +21,18 @@ export const ContainerScroll = ({
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const rotate = useTransform(scrollYProgress, [0, 1], [20, 0]);
+  const rotate = useTransform(scrollYProgress, (v) =>
+    v * (isMobileRef.current ? -12 : -20) + (isMobileRef.current ? 12 : 20)
+  );
   const scale = useTransform(scrollYProgress, (v) =>
     // Read ref at transform time — avoids re-creating MotionValue on resize
-    v * (isMobileRef.current ? (0.9 - 0.7) : (1 - 1.05)) + (isMobileRef.current ? 0.7 : 1.05)
+    v * (isMobileRef.current ? (1 - 0.85) : (1 - 1.05)) + (isMobileRef.current ? 0.85 : 1.05)
   );
   const translate = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   return (
     <div
-      className="relative flex h-240 items-center justify-center p-2 md:h-320 md:p-20"
+      className="relative flex h-200 items-center justify-center p-2 md:h-320 md:p-20"
       ref={containerRef}
     >
       <div className="relative w-full py-10 md:py-40" style={{ perspective: "1000px" }}>
