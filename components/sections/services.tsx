@@ -55,7 +55,7 @@ const POSITIONS: Record<string, { top: string; left?: string; right?: string }> 
 
 function RadarView({ onSelect }: { onSelect: (id: string) => void }) {
   return (
-    <div className="relative h-120 w-full overflow-hidden">
+    <div className="relative h-96 w-full overflow-hidden md:h-120">
       {services.map((svc, i) => {
         const pos = POSITIONS[svc.id];
         const color = ACCENT[svc.id] ?? "#38bdf8";
@@ -237,7 +237,7 @@ function BriefBar({ selected, onClear }: { selected: string[]; onClear: () => vo
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 48, opacity: 0 }}
       transition={{ type: "spring", stiffness: 380, damping: 32 }}
-      className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2"
+      className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-1/2 z-50 -translate-x-1/2 max-w-[calc(100vw-16px)]"
     >
       <div className="flex items-center gap-3 rounded-2xl border border-border/60 bg-background/90 px-4 py-3 shadow-2xl backdrop-blur-xl">
         <div className="flex flex-wrap items-center gap-2">
@@ -307,7 +307,7 @@ export function Services() {
             initial={{ opacity: 0, y: 18 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="font-heading max-w-2xl text-4xl leading-tight font-medium tracking-tight md:text-6xl"
+            className="font-heading max-w-2xl text-3xl leading-tight font-medium tracking-tight sm:text-4xl md:text-6xl"
           >
             Co dla Ciebie
             <br />

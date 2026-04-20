@@ -38,7 +38,7 @@ function BioColumn() {
         initial={{ opacity: 0, y: 18 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-        className="font-heading text-4xl leading-tight font-medium tracking-tight md:text-5xl"
+        className="font-heading text-3xl leading-tight font-medium tracking-tight sm:text-4xl md:text-5xl"
       >
         Cześć,
         <br />
@@ -212,7 +212,7 @@ function Chip({
         initial={false}
         animate={open ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 6, scale: 0.96 }}
         transition={{ duration: 0.18, ease: "easeOut" }}
-        className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-56 -translate-x-1/2 rounded-xl border border-border/60 bg-card px-4 py-2.5 text-[0.75rem] leading-snug text-muted-foreground shadow-md"
+        className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-56 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-xl border border-border/60 bg-card px-4 py-2.5 text-[0.75rem] leading-snug text-muted-foreground shadow-md"
       >
         {chip.tooltip}
         <span

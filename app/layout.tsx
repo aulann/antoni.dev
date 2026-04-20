@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter_Tight, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
-import { CustomCursor } from "@/components/cursor";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -106,7 +105,6 @@ export default function RootLayout({
               Przejdź do treści
             </a>
             {children}
-            <CustomCursor />
             <Toaster />
           </LenisProvider>
         </ThemeProvider>

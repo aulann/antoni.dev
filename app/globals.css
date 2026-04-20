@@ -129,6 +129,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: auto; /* Lenis handles smooth scroll, disable native */
+    overflow-x: clip;
+    max-width: 100%;
   }
   @media (hover: hover) and (pointer: fine) {
     html {
@@ -139,6 +141,11 @@
     @apply bg-background text-foreground;
     font-feature-settings: "ss01", "cv11";
     overflow-x: clip;
+    max-width: 100%;
+  }
+  main {
+    overflow-x: clip;
+    max-width: 100%;
   }
   ::selection {
     background-color: var(--accent);
@@ -195,20 +202,4 @@
   }
 }
 
-html,
-body {
-  cursor: none;
-}
-@media (hover: none), (pointer: coarse), (any-pointer: coarse) {
-  html,
-  body {
-    cursor: auto;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  html,
-  body {
-    cursor: auto;
-  }
-}
 

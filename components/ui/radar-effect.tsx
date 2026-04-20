@@ -38,7 +38,7 @@ export const Radar = ({ className }: { className?: string }) => {
       `}</style>
       <div
         style={{ transformOrigin: "right center" }}
-        className="animate-radar-spin absolute right-1/2 top-1/2 z-40 flex h-[5px] w-130 items-end justify-center overflow-hidden bg-transparent"
+        className="animate-radar-spin absolute right-1/2 top-1/2 z-40 hidden h-[5px] w-130 items-end justify-center overflow-hidden bg-transparent md:flex"
       >
         <div className="relative z-40 h-[1px] w-full bg-gradient-to-r from-transparent via-accent to-transparent" />
       </div>

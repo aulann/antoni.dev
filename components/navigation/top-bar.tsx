@@ -123,7 +123,7 @@ export function TopBar() {
                     <a
                       href={link.href}
                       onClick={() => setMenuOpen(false)}
-                      className="block py-3 font-heading text-4xl font-medium transition-colors hover:text-accent"
+                      className="block py-3 font-heading text-3xl font-medium sm:text-4xl transition-colors hover:text-accent"
                     >
                       {link.label}
                     </a>

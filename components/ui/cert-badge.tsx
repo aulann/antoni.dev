@@ -171,8 +171,8 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
           <SealCheck size={13} weight="fill" className="shrink-0 text-amber-500" />
           <span className="text-xs text-muted-foreground/60">{year}</span>
         </div>
-        <span className="truncate text-xs text-muted-foreground">{name}</span>
-        <span className="truncate text-[0.7rem] tracking-wide text-muted-foreground/50 uppercase">
+        <span className="text-xs text-muted-foreground">{name}</span>
+        <span className="text-[0.7rem] tracking-wide text-muted-foreground/50 uppercase">
           {issuer}
         </span>
       </div>
@@ -181,7 +181,7 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
 
   if (isTouch) {
     return (
-      <div className="relative overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3">
+      <div className="relative max-w-64 overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3">
         {cardContent}
       </div>
     );

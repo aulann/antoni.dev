@@ -95,7 +95,7 @@ function HeroCardContent({ visible }: { visible: boolean }) {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute top-1/2 left-1/2 size-175 -translate-1/2 rounded-full bg-accent/5 blur-3xl"
+        className="pointer-events-none absolute top-1/2 left-1/2 size-80 -translate-1/2 rounded-full bg-accent/5 blur-3xl md:size-175"
       />
 
       <AnimatePresence>

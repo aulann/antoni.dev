@@ -57,7 +57,7 @@ export function Footer() {
   return (
     <footer className="px-5 pb-8 pt-12 md:px-8">
       <div className="mx-auto max-w-6xl">
-        <div className="relative rounded-3xl border border-border/50 bg-muted/30 px-8 py-10 md:px-12 md:py-12">
+        <div className="relative rounded-3xl border border-border/50 bg-muted/30 px-5 py-10 md:px-12 md:py-12">
           <Tape side="left" />
           <Tape side="right" />
 
@@ -81,7 +81,7 @@ export function Footer() {
                       aria-label={label}
                       target={href.startsWith("http") ? "_blank" : undefined}
                       rel={href.startsWith("http") ? "noreferrer" : undefined}
-                      className="inline-flex size-9 items-center justify-center rounded-full border border-transparent text-muted-foreground transition-colors hover:border-border hover:bg-muted hover:text-foreground"
+                      className="inline-flex size-11 items-center justify-center rounded-full border border-transparent text-muted-foreground transition-colors hover:border-border hover:bg-muted hover:text-foreground"
                     >
                       <Icon size={16} weight="regular" />
                     </a>

@@ -92,7 +92,7 @@ export function Contact() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className="font-heading text-4xl leading-tight font-medium tracking-tight md:text-6xl"
+                className="font-heading text-3xl leading-tight font-medium tracking-tight sm:text-4xl md:text-6xl"
               >
                 Porozmawiajmy.
               </motion.h2>
