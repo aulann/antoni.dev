@@ -21,11 +21,11 @@ export const ContainerScroll = ({
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // rotateX disabled on mobile — 3D perspective causes GPU jank during scroll on iOS/Android
   const rotate = useTransform(scrollYProgress, (v) =>
-    v * (isMobileRef.current ? -12 : -20) + (isMobileRef.current ? 12 : 20)
+    isMobileRef.current ? 0 : v * -20 + 20
   );
   const scale = useTransform(scrollYProgress, (v) =>
-    // Read ref at transform time — avoids re-creating MotionValue on resize
     v * (isMobileRef.current ? (1 - 0.85) : (1 - 1.05)) + (isMobileRef.current ? 0.85 : 1.05)
   );
   const translate = useTransform(scrollYProgress, [0, 1], [0, -100]);
@@ -74,6 +74,8 @@ const Card = ({
     style={{
       rotateX: rotate,
       scale,
+      willChange: "transform",
+      backfaceVisibility: "hidden",
       boxShadow:
         "0 0 #00000020, 0 9px 20px #0000001e, 0 37px 37px #00000018, 0 84px 50px #0000000e, 0 149px 60px #00000005, 0 233px 65px #00000002",
     }}

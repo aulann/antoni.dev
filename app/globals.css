@@ -128,12 +128,17 @@
     @apply font-sans antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scrollbar-gutter: stable;
     scroll-behavior: auto; /* Lenis handles smooth scroll, disable native */
+  }
+  @media (hover: hover) and (pointer: fine) {
+    html {
+      scrollbar-gutter: stable;
+    }
   }
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "ss01", "cv11";
+    overflow-x: clip;
   }
   ::selection {
     background-color: var(--accent);

@@ -53,6 +53,11 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
   const [disableInOut, setDisableInOut] = useState(true);
   const [disableAnim, setDisableAnim] = useState(false);
   const [timeoutDone, setTimeoutDone] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none), (pointer: coarse)").matches);
+  }, []);
 
   const enterTO = useRef<ReturnType<typeof setTimeout> | null>(null);
   const leaveTO = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -153,6 +158,35 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
     document.head.appendChild(style);
   }, []);
 
+  const cardContent = (
+    <div className="relative flex items-center gap-3">
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/10">
+        <Certificate size={18} weight="duotone" className="text-amber-500" />
+      </div>
+      <div className="flex min-w-0 flex-col gap-0.5">
+        <div className="flex items-center gap-1.5">
+          <span className="font-heading text-sm font-semibold tracking-wide text-foreground">
+            {code}
+          </span>
+          <SealCheck size={13} weight="fill" className="shrink-0 text-amber-500" />
+          <span className="text-xs text-muted-foreground/60">{year}</span>
+        </div>
+        <span className="truncate text-xs text-muted-foreground">{name}</span>
+        <span className="truncate text-[0.7rem] tracking-wide text-muted-foreground/50 uppercase">
+          {issuer}
+        </span>
+      </div>
+    </div>
+  );
+
+  if (isTouch) {
+    return (
+      <div className="relative overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3">
+        {cardContent}
+      </div>
+    );
+  }
+
   return (
     <div
       ref={ref}
@@ -207,24 +241,8 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
           </svg>
         </div>
 
-        {/* Card content */}
-        <div className="relative flex items-center gap-4">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/10">
-            <Certificate size={20} weight="duotone" className="text-amber-500" />
-          </div>
-          <div className="flex min-w-0 flex-col gap-0.5">
-            <div className="flex items-center gap-2">
-              <span className="font-heading text-sm font-semibold tracking-wide text-foreground">
-                {code}
-              </span>
-              <SealCheck size={14} weight="fill" className="shrink-0 text-amber-500" />
-              <span className="text-xs text-muted-foreground/60">{year}</span>
-            </div>
-            <span className="truncate text-xs text-muted-foreground">{name}</span>
-            <span className="text-[0.72rem] tracking-wide text-muted-foreground/50 uppercase">
-              {issuer}
-            </span>
-          </div>
+        <div className="relative">
+          {cardContent}
         </div>
       </div>
     </div>
