@@ -1,0 +1,138 @@
+/* ============================================================
+   MYNRD THEME
+   To revert: remove `@import "./theme-mynrd.css"` from globals.css
+            + revert footer.tsx to footer.backup.tsx
+            + revert defaultTheme in layout.tsx back to "dark"
+   ============================================================ */
+
+/* ── Tokens ─────────────────────────────────────────────────── */
+:root {
+  --background:          #f0e6d3;
+  --foreground:          #0d0d0d;
+  --card:                #f7efe0;
+  --card-foreground:     #0d0d0d;
+  --popover:             #ffffff;
+  --popover-foreground:  #0d0d0d;
+
+  --primary:             #0d0d0d;
+  --primary-foreground:  #fdf8f0;
+
+  --secondary:           #ede8e0;
+  --secondary-foreground:#0d0d0d;
+
+  --muted:               #ede8e0;
+  --muted-foreground:    #6b6355;
+
+  --accent:              #0a3e42;
+  --accent-foreground:   #fdf8f0;
+  --accent-hover:        #0d4f54;
+
+  --destructive:         #c0392b;
+
+  --border:              #d8d0c4;
+  --input:               #d8d0c4;
+  --ring:                #0a3e42;
+
+  --chart-1: #0a3e42;
+  --chart-2: #d1c8bb;
+  --chart-3: #fff4e4;
+  --chart-4: #6b9fa3;
+  --chart-5: #b5a99a;
+
+  --radius: 0.125rem; /* almost sharp, slight relief */
+
+  --sidebar:                 #f0e6d3;
+  --sidebar-foreground:      #0d0d0d;
+  --sidebar-primary:         #0a3e42;
+  --sidebar-primary-foreground: #fdf8f0;
+  --sidebar-accent:          #ede8e0;
+  --sidebar-accent-foreground: #0d0d0d;
+  --sidebar-border:          #d8d0c4;
+  --sidebar-ring:            #0a3e42;
+
+  --font-sans:    var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-serif:   var(--font-playfair), ui-serif, Georgia, serif;
+}
+
+.dark {
+  --background:          #0e1a1b;
+  --foreground:          #f2ede4;
+  --card:                #152223;
+  --card-foreground:     #f2ede4;
+  --popover:             #152223;
+  --popover-foreground:  #f2ede4;
+  --primary:             #f2ede4;
+  --primary-foreground:  #0e1a1b;
+  --secondary:           #1c3032;
+  --secondary-foreground:#f2ede4;
+  --muted:               #1c3032;
+  --muted-foreground:    #9e9484;
+  --accent:              #4a9ea5;
+  --accent-foreground:   #0e1a1b;
+  --accent-hover:        #5ab4bc;
+  --border:              #1c3032;
+  --input:               #1c3032;
+  --ring:                #4a9ea5;
+
+  --font-sans:    var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-serif:   var(--font-playfair), ui-serif, Georgia, serif;
+}
+
+/* ── Base overrides ─────────────────────────────────────────── */
+@layer base {
+  html {
+    font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  body {
+    font-size: 15px;
+    font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: 0.005em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), ui-serif, Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ── Utilities ───────────────────────────────────────────────── */
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-playfair), ui-serif, Georgia, serif !important;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in srgb, var(--foreground) 8%, transparent) 1px,
+      transparent 0
+    );
+  }
+
+  .dot-grid-dense {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in srgb, var(--foreground) 6%, transparent) 1px,
+      transparent 0
+    );
+  }
+
+  /* Editorial marquee animation */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 18s linear infinite;
+  }
+}
+
+/* ── Selection ───────────────────────────────────────────────── */
+::selection {
+  background-color: #0a3e42;
+  color: #fdf8f0;
+}

@@ -127,8 +127,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-6 px-2 text-xs text-muted-foreground text-center">
-          <span suppressHydrationWarning>© {year} – Antoni Ułan</span>
+        <div className="mt-6 flex flex-col items-center justify-between gap-3 px-2 text-xs text-muted-foreground/50 sm:flex-row">
+          <span suppressHydrationWarning>© {year} Antoni. Wszelkie prawa zastrzeżone.</span>
+          <span>Built with Next.js · Tailwind · Vercel</span>
         </div>
       </div>
     </footer>

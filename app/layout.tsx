@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter_Tight, Geist_Mono } from "next/font/google";
+import { Fraunces, Inter_Tight, Geist_Mono, Playfair_Display, DM_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -22,6 +22,21 @@ const interTight = Inter_Tight({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500"],
   display: "swap",
 });
 
@@ -87,12 +102,12 @@ export default function RootLayout({
     <html
       lang="pl"
       suppressHydrationWarning
-      className={`${fraunces.variable} ${interTight.variable} ${geistMono.variable}`}
+      className={`${fraunces.variable} ${interTight.variable} ${geistMono.variable} ${playfairDisplay.variable} ${dmSans.variable}`}
     >
       <body className="min-h-dvh bg-background text-foreground antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           storageKey="ap-theme"
           enableSystem={false}
           disableTransitionOnChange
