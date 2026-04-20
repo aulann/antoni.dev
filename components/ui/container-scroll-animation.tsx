@@ -108,7 +108,7 @@ const Card = ({
     }}
     className={CARD_CLASS}
   >
-    <div className="h-full w-full overflow-hidden rounded-2xl bg-background">
+    <div className="h-full w-full overflow-hidden rounded-[22px] md:rounded-[6px] bg-background">
       {children}
     </div>
   </motion.div>
