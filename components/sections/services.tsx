@@ -149,7 +149,7 @@ function ServiceCard({
           </div>
           <div className="flex items-center gap-2">
             <span
-              className="rounded-full px-2.5 py-0.5 text-[0.7rem] font-semibold tracking-[0.15em] uppercase"
+              className="rounded-full px-2.5 py-0.5 text-[0.75rem] font-semibold tracking-[0.15em] uppercase"
               style={{ color, background: rgba(color, 0.1), border: `1px solid ${rgba(color, 0.25)}` }}
             >
               {service.badge}
@@ -299,7 +299,7 @@ export function Services() {
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-[0.7rem] tracking-[0.25em] text-muted-foreground uppercase"
+            className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-[0.75rem] tracking-[0.25em] text-muted-foreground uppercase"
           >
             04 · Usługi
           </motion.span>

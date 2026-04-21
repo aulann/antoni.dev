@@ -27,7 +27,7 @@ export function Projects() {
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-[0.7rem] tracking-[0.25em] text-muted-foreground uppercase"
+            className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-[0.75rem] tracking-[0.25em] text-muted-foreground uppercase"
           >
             03 · Projekty
           </motion.span>
@@ -126,6 +126,11 @@ function ProjectCard({ project }: { project: Project }) {
     videoRef.current?.pause();
   };
 
+  const handleClick = () => {
+    sessionStorage.setItem("portfolio-scroll-y", String(window.scrollY));
+    router.push(`/projects/${project.slug}`);
+  };
+
   const handleMouseEnter = () => {
     if (!project.heroVideo) return;
     setShowVideo(true);
@@ -138,7 +143,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <motion.div
       ref={cardRef}
-      onClick={() => router.push(`/projects/${project.slug}`)}
+      onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -216,7 +221,7 @@ function ProjectCard({ project }: { project: Project }) {
           {project.stack.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-border/60 bg-muted/40 px-2.5 py-0.5 text-[0.72rem] text-muted-foreground"
+              className="rounded-full border border-border/60 bg-muted/40 px-2.5 py-0.5 text-[0.75rem] text-muted-foreground"
             >
               {tech}
             </span>

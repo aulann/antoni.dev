@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, PaperPlaneTilt } from "@phosphor-icons/react";
 import { heroContent } from "@/lib/content/hero";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { useBackNav } from "@/components/providers/back-nav-provider";
 
 const SPLASH_TEXT = "\u201eCode is craft.\u201d";
 
@@ -196,7 +197,12 @@ function HeroCardContent({ visible }: { visible: boolean }) {
 }
 
 export function HeroScroll() {
+  const isBackNav = useBackNav();
   const [cardVisible, setCardVisible] = useState(false);
+
+  useEffect(() => {
+    if (isBackNav) setCardVisible(true);
+  }, [isBackNav]);
 
   return (
     <section id="top">

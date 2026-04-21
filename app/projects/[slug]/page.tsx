@@ -42,7 +42,7 @@ export default async function CaseStudyPage({ params }: Props) {
       {/* Header */}
       <div className="mb-16 flex flex-col gap-5">
         <span
-          className="inline-flex w-max items-center gap-2 rounded-full border bg-muted/40 px-3 py-1 text-[0.7rem] tracking-[0.25em] text-muted-foreground uppercase"
+          className="inline-flex w-max items-center gap-2 rounded-full border bg-muted/40 px-3 py-1 text-[0.75rem] tracking-[0.25em] text-muted-foreground uppercase"
           style={{ borderColor: `${project.accentColor}50` }}
         >
           Case study
@@ -56,7 +56,7 @@ export default async function CaseStudyPage({ params }: Props) {
             {project.stack.map((tech) => (
               <span
                 key={tech}
-                className="rounded-full border border-border/60 bg-muted/40 px-2.5 py-0.5 text-[0.65rem] text-muted-foreground"
+                className="rounded-full border border-border/60 bg-muted/40 px-2.5 py-0.5 text-[0.75rem] text-muted-foreground"
               >
                 {tech}
               </span>

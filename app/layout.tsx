@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter_Tight, Geist_Mono, Playfair_Display, DM_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
+import { BackNavProvider } from "@/components/providers/back-nav-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -113,14 +114,16 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <LenisProvider>
-            <a
-              href="#main"
-              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:outline-2 focus:outline-accent"
-            >
-              Przejdź do treści
-            </a>
-            {children}
-            <Toaster />
+            <BackNavProvider>
+              <a
+                href="#main"
+                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:outline-2 focus:outline-accent"
+              >
+                Przejdź do treści
+              </a>
+              {children}
+              <Toaster />
+            </BackNavProvider>
           </LenisProvider>
         </ThemeProvider>
       </body>
