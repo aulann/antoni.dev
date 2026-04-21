@@ -108,24 +108,11 @@ function HeroCardContent({ visible }: { visible: boolean }) {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="relative mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-8 md:px-10 md:py-10"
           >
-            <motion.span
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-background/50 px-3.5 py-1.5 text-xs text-muted-foreground backdrop-blur"
-            >
-              <span className="relative flex size-2">
-                <span className="absolute inset-0 animate-ping rounded-full bg-accent opacity-60" />
-                <span className="relative size-2 rounded-full bg-accent" />
-              </span>
-              Dostępny dla nowych projektów
-            </motion.span>
-
             <h1 className="font-heading text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] font-medium tracking-[-0.02em]">
               {heroContent.verbs.map((verb, i) => (
                 <motion.span
                   key={verb}
-                  className="block"
+                  className="block mb-1.25 md:mb-0"
                   initial={{ y: "110%", opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{

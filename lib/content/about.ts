@@ -23,27 +23,37 @@ export const aboutContent = {
       issuer: "CompTIA",
       icon: "SiComptia",
     },
+    {
+      id: "inf03",
+      code: "INF.03",
+      name: "Tworzenie i administrowanie stronami i aplikacjami internetowymi",
+      issuer: "Egzamin zawodowy · Ministerstwo Edukacji",
+      icon: "Browser",
+    },
   ],
   bio: [
-    "Cześć, jestem Antoni. Od dziecka interesuje mnie jak coś działa — zaczęło się od rozkręcania komputera, żeby zobaczyć co jest w środku. Dziś składam PC-ty, konfiguruję sieci i buduję aplikacje, które rzeczywiście rozwiązują problemy.",
-    "Mam 17 lat i wciąż się uczę — INF.02 zaliczony, CCNA w drodze, a AI i automatyzacje to moje codzienne eksperymenty. Technologia to dla mnie nie tylko praca — to zabawa, pasja i nieustanna ciekawość.",
+    "Od dziecka interesują mnie komputery i to, jak rzeczy działają — zacząłem od oglądania YouTube'a, oglądałem budowanie komputerów i gierki, od razu wiedziałem że chcę robić to samo. Z czasem moja ciekawość weszła w praktykę — zacząłem rozumieć jak działa system od środka, sieci, kod. Rok temu zdałem INF.02 na 100% z części praktycznej. Dziś najbardziej kręci mnie cyberbezpieczeństwo i AI, mam wiele zajawek z informatyki, próbuję wszystkiego i tego co najbardziej mnie interesuje — szybko się uczę i wszystko jest dla mnie ciekawe.",
   ],
   chips: [
     {
       label: "Składam PC od dziecka",
-      tooltip: "Kilkanaście składanych zestawów. Wiem co pasuje do czego i czemu.",
+      tooltip:
+        "Kilkanaście składanych zestawów. Wiem co pasuje do czego i czemu.",
     },
     {
       label: "CCNA w drodze",
-      tooltip: "Uczę się routingu, switchingu i sieci Cisco. Networking to osobna pasja.",
+      tooltip:
+        "Uczę się routingu, switchingu i sieci Cisco. Networking to osobna pasja.",
     },
     {
       label: "n8n jako ukryty talent",
-      tooltip: "Automatyzuję procesy robocze zanim ktokolwiek zapyta czy się da.",
+      tooltip:
+        "Automatyzuję procesy robocze zanim ktokolwiek zapyta czy się da.",
     },
     {
       label: "Supabase fanboy",
-      tooltip: "Postgres + Auth + Storage + RLS — jedno narzędzie, zero kompromisów.",
+      tooltip:
+        "Postgres + Auth + Storage + RLS — jedno narzędzie, zero kompromisów.",
     },
     {
       label: "AI-apki dla zabawy",
@@ -51,7 +61,8 @@ export const aboutContent = {
     },
     {
       label: "Debuguję w nocy",
-      tooltip: "Najlepsze rozwiązania przychodzą między 23:00 a 1:00 — to naukowy fakt.",
+      tooltip:
+        "Najlepsze rozwiązania przychodzą między 23:00 a 1:00 — to naukowy fakt.",
     },
   ],
 };

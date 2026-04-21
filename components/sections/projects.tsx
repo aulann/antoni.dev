@@ -29,7 +29,7 @@ export function Projects() {
             transition={{ duration: 0.5 }}
             className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-[0.75rem] tracking-[0.25em] text-muted-foreground uppercase"
           >
-            03 · Projekty
+            Projekty
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 18 }}

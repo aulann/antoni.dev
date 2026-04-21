@@ -1,13 +1,16 @@
 "use client";
 
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { Certificate, SealCheck } from "@phosphor-icons/react";
+import Image from "next/image";
 
 interface CertBadgeProps {
   code: string;
   name: string;
   issuer: string;
   year: string;
+  logo?: string;
+  icon?: ReactNode;
 }
 
 const identityMatrix =
@@ -45,7 +48,7 @@ const OVERLAY_COLORS = [
   "white",
 ];
 
-export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
+export function CertBadge({ code, name, issuer, year, logo, icon }: CertBadgeProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [firstOverlay, setFirstOverlay] = useState(0);
   const [matrix, setMatrix] = useState(identityMatrix);
@@ -160,19 +163,25 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
 
   const cardContent = (
     <div className="relative flex items-center gap-3">
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/10">
-        <Certificate size={18} weight="duotone" className="text-amber-500" />
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/10 overflow-hidden">
+        {logo ? (
+          <Image src={logo} alt={code} width={36} height={36} className="size-full object-cover" unoptimized />
+        ) : icon ? (
+          icon
+        ) : (
+          <Certificate size={18} weight="duotone" className="text-amber-500" />
+        )}
       </div>
       <div className="flex min-w-0 flex-col gap-0.5">
         <div className="flex items-center gap-1.5">
-          <span className="font-heading text-sm font-semibold tracking-wide text-foreground">
+          <span className="font-heading text-sm font-semibold tracking-wide text-foreground md:text-base">
             {code}
           </span>
           <SealCheck size={13} weight="fill" className="shrink-0 text-amber-500" />
           <span className="text-xs text-muted-foreground/60">{year}</span>
         </div>
-        <span className="text-xs text-muted-foreground">{name}</span>
-        <span className="text-[0.7rem] tracking-wide text-muted-foreground/50 uppercase">
+        <span className="text-xs text-muted-foreground md:text-sm">{name}</span>
+        <span className="text-[0.7rem] tracking-wide text-muted-foreground/50 uppercase md:text-xs">
           {issuer}
         </span>
       </div>
@@ -181,7 +190,7 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
 
   if (isTouch) {
     return (
-      <div className="relative max-w-64 overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3">
+      <div className="relative w-full overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3">
         {cardContent}
       </div>
     );
@@ -194,6 +203,7 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       style={{ perspective: "700px" }}
+      className="w-full"
     >
       <div
         style={{
@@ -201,7 +211,7 @@ export function CertBadge({ code, name, issuer, year }: CertBadgeProps) {
           transformOrigin: "center center",
           transition: "transform 200ms ease-out",
         }}
-        className="relative overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3"
+        className="relative w-full overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3"
       >
         {/* Holographic overlay */}
         <div

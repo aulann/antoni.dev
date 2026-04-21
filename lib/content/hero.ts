@@ -1,8 +1,8 @@
 export const heroContent = {
-  verbs: ["Buduję.", "Automatyzuję.", "Składam.", "Uczę się."],
+  verbs: ["Hej, jestem Antoni.", "Mam 17 lat.", "Czym się zajmuję?"],
   tagline:
-    "Pasjonat technologii — od składania PC-tów po aplikacje webowe, AI i automatyzacje.",
-  primaryCta: { label: "Zobacz projekty", href: "#projekty" },
+    "Informatyka i technologia to moja pasja — komputery, sieci, programowanie i AI.",
+  primaryCta: { label: "Zobacz moje prace", href: "#projekty" },
   secondaryCta: { label: "Napisz", href: "#kontakt" },
   scrollHint: "Przewiń",
 };

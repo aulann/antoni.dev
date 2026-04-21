@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 import { SiCisco, SiComptia } from "@icons-pack/react-simple-icons";
+import { Certificate, Network, Browser } from "@phosphor-icons/react";
 import { aboutContent } from "@/lib/content/about";
 import { CertBadge } from "@/components/ui/cert-badge";
 
@@ -24,14 +25,14 @@ function BioColumn() {
   const inView = useInView(ref, { once: true, margin: "-15%" });
 
   return (
-    <div ref={ref} className="flex flex-col gap-8">
+    <div ref={ref} className="flex min-w-0 flex-col gap-8 overflow-hidden">
       <motion.span
         initial={{ opacity: 0, y: 10 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5 }}
         className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-[0.7rem] tracking-[0.25em] text-muted-foreground uppercase"
       >
-        01 · O mnie
+        O mnie
       </motion.span>
 
       <motion.h2
@@ -40,9 +41,7 @@ function BioColumn() {
         transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         className="font-heading text-3xl leading-tight font-medium tracking-tight sm:text-4xl md:text-5xl"
       >
-        Cześć,
-        <br />
-        jestem Antoni.
+        Jestem Antoni.
       </motion.h2>
 
       <div className="flex flex-col gap-4">
@@ -82,6 +81,7 @@ function BioColumn() {
                 name={cert.name}
                 issuer={cert.issuer}
                 year={cert.year}
+                icon={<Network size={18} weight="duotone" className="text-amber-500" />}
               />
             </motion.div>
           ))}
@@ -96,7 +96,7 @@ function BioColumn() {
           transition={{ duration: 0.5, delay: 0.55 }}
           className="text-xs tracking-[0.25em] text-muted-foreground/70 uppercase"
         >
-          W trakcie
+          Wkrótce
         </motion.p>
         <div className="flex flex-col gap-2">
           {aboutContent.inProgressCerts.map((cert, i) => (
@@ -105,23 +105,21 @@ function BioColumn() {
               initial={{ opacity: 0, x: -12 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.62 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-4 rounded-xl border border-border/50 bg-muted/30 px-4 py-3"
+              className="flex items-center gap-4 overflow-hidden rounded-xl border border-border/50 bg-muted/30 px-4 py-3 md:px-5 md:py-4"
             >
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border/50 bg-muted/50">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border/50 bg-muted/50 md:size-14">
                 {cert.icon === "SiCisco" && <SiCisco size={28} className="text-[#1BA0D7]" />}
                 {cert.icon === "SiComptia" && <SiComptia size={28} className="text-[#C8202F]" />}
+                {cert.icon === "Browser" && <Browser size={26} weight="duotone" className="text-amber-500" />}
               </div>
               <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-heading text-sm font-semibold tracking-wide text-foreground">
+                  <span className="font-heading text-sm font-semibold tracking-wide text-foreground md:text-base">
                     {cert.code}
                   </span>
-                  <span className="inline-flex items-center rounded-full border border-accent/30 bg-accent/8 px-2 py-0.5 text-[0.7rem] font-medium tracking-widest text-accent uppercase">
-                    w trakcie
-                  </span>
                 </div>
-                <span className="truncate text-xs text-muted-foreground">{cert.name}</span>
-                <span className="text-[0.72rem] tracking-wide text-muted-foreground/50 uppercase">{cert.issuer}</span>
+                <span className="text-xs text-muted-foreground md:text-sm">{cert.name}</span>
+                <span className="text-[0.72rem] tracking-wide text-muted-foreground/50 uppercase md:text-xs">{cert.issuer}</span>
               </div>
             </motion.div>
           ))}

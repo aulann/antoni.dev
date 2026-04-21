@@ -86,7 +86,7 @@ export function Contact() {
                 transition={{ duration: 0.5 }}
                 className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-[0.7rem] tracking-[0.25em] text-muted-foreground uppercase"
               >
-                07 · Kontakt
+                Kontakt
               </motion.span>
               <motion.h2
                 initial={{ opacity: 0, y: 18 }}
