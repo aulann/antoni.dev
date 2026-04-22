@@ -131,6 +131,37 @@
   }
 }
 
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0e6d3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4b9aa;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b6355;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0e1a1b;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #1c3032;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4a9ea5;
+}
+
 /* ── Selection ───────────────────────────────────────────────── */
 ::selection {
   background-color: #0a3e42;
