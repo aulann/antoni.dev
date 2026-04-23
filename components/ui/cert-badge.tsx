@@ -221,6 +221,7 @@ export function CertBadge({ code, name, issuer, year, logo, icon }: CertBadgePro
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 100"
             className="absolute inset-0 h-full w-full"
             preserveAspectRatio="none"
           >
@@ -241,7 +242,7 @@ export function CertBadge({ code, name, issuer, year, logo, icon }: CertBadgePro
                 }}
               >
                 <polygon
-                  points="0,0 100%,100% 100%,0 0,100%"
+                  points="0,0 100,100 100,0 0,100"
                   fill={color}
                   filter="url(#certBlur)"
                   opacity="0.55"

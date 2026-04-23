@@ -32,7 +32,7 @@ export const aboutContent = {
     },
   ],
   bio: [
-    "Od dziecka interesują mnie komputery i to, jak rzeczy działają — zacząłem od oglądania YouTube'a, oglądałem budowanie komputerów i gierki, od razu wiedziałem że chcę robić to samo. Z czasem moja ciekawość weszła w praktykę — zacząłem rozumieć jak działa system od środka, sieci, kod. Rok temu zdałem mój pierwszy egzamin INF.02 na 100% z części praktycznej. Dziś najbardziej kręci mnie cyberbezpieczeństwo i AI, mam wiele zajawek z informatyki, próbuję wszystkiego i tego co najbardziej mnie interesuje — szybko się uczę i wszystko jest dla mnie ciekawe.",
+    "Od dziecka interesują mnie komputery i to, jak działają różne rzeczy — zacząłem od oglądania YouTube'a, oglądałem budowanie komputerów i gierki, od razu wiedziałem że chcę robić to samo. Z czasem moja ciekawość weszła w praktykę — zacząłem rozumieć jak działa system od środka, sieci, kod. Rok temu zdałem mój pierwszy egzamin INF.02 na 100% z części praktycznej. Dziś najbardziej kręci mnie cyberbezpieczeństwo i AI, mam wiele zajawek z informatyki, próbuję wszystkiego i tego co najbardziej mnie interesuje — szybko się uczę i wszystko jest dla mnie ciekawe.",
   ],
   chips: [
     {

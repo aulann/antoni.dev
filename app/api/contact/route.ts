@@ -10,9 +10,17 @@ const schema = z.object({
   message: z.string().min(10),
 });
 
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 204 });
+}
+
 export async function POST(req: Request) {
-  const body = await req.json();
-  console.log("[contact] received", body);
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Nieprawidłowe dane" }, { status: 400 });
+  }
 
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
@@ -29,10 +37,9 @@ export async function POST(req: Request) {
   });
 
   if (error) {
-    console.log("[contact] resend error", error);
+    console.error("[contact] resend error:", error.name, error.message);
     return NextResponse.json({ error: "Błąd wysyłki" }, { status: 500 });
   }
 
-  console.log("[contact] sent ok");
   return NextResponse.json({ ok: true });
 }

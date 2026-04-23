@@ -13,45 +13,29 @@ export const ContainerScroll = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
 
-  // Desktop initial values at scroll=0: scale 1.05, rotateX 20deg, translateY 0
-  const scale = useMotionValue(1.05);
-  const rotate = useMotionValue(20);
+  // Start at neutral values — before first paint useLayoutEffect applies correct state
+  const scale = useMotionValue(1);
+  const rotate = useMotionValue(0);
   const translate = useMotionValue(0);
 
   useLayoutEffect(() => {
+    // Synchronous read before browser paint — no flash on mobile
     const mobile = window.innerWidth <= 768;
 
     if (mobile) {
-      // Lock to static values before first paint — no scroll subscription
-      scale.set(1);
-      rotate.set(0);
-      translate.set(0);
-
-      const onResize = () => {
-        if (window.innerWidth > 768) window.location.reload();
-      };
-      window.addEventListener("resize", onResize);
-      return () => window.removeEventListener("resize", onResize);
+      // Values already neutral (1, 0, 0) — nothing to do
+      return;
     }
 
-    // Desktop: drive values from scroll
+    // Desktop: drive values from scroll progress
     const update = (v: number) => {
       scale.set(v * (1 - 1.05) + 1.05);
       rotate.set(v * -20 + 20);
       translate.set(v * -100);
     };
-    // Sync with current scroll position immediately
     update(scrollYProgress.get());
     const unsub = scrollYProgress.on("change", update);
-
-    const onResize = () => {
-      if (window.innerWidth <= 768) window.location.reload();
-    };
-    window.addEventListener("resize", onResize);
-    return () => {
-      unsub();
-      window.removeEventListener("resize", onResize);
-    };
+    return unsub;
   }, [scrollYProgress, scale, rotate, translate]);
 
   return (

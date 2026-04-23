@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowRight, PaperPlaneTilt } from "@phosphor-icons/react";
 import { heroContent } from "@/lib/content/hero";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
@@ -28,6 +28,7 @@ const CHAR_DELAYS: number[] = [
   280, // .  ← dramatic pause before final dot
   55,  // "
 ];
+
 
 function TypingTitle({ onDone }: { onDone: () => void }) {
   const [visibleChars, setVisibleChars] = useState(0);
@@ -73,15 +74,13 @@ function TypingTitle({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <span className="font-heading text-4xl tracking-tight text-foreground md:text-6xl">
+      <span className="font-heading text-4xl tracking-tight text-foreground md:text-6xl select-none">
         {SPLASH_TEXT.slice(0, visibleChars)}
-        {!cursorDone && (
-          <motion.span
-            className="ml-1 inline-block h-[1em] w-0.5 translate-y-[0.1em] bg-accent align-middle"
-            animate={{ opacity: [1, 0, 1] }}
-            transition={{ duration: 0.8, repeat: Infinity }}
-          />
-        )}
+        <motion.span
+          className="ml-1 inline-block h-[1em] w-0.5 translate-y-[0.1em] bg-accent align-middle"
+          animate={cursorDone ? { opacity: 0 } : { opacity: [1, 0, 1] }}
+          transition={cursorDone ? { duration: 0.15 } : { duration: 0.8, repeat: Infinity }}
+        />
       </span>
     </div>
   );
@@ -99,86 +98,78 @@ function HeroCardContent({ visible }: { visible: boolean }) {
         className="pointer-events-none absolute top-1/2 left-1/2 size-80 -translate-1/2 rounded-full bg-accent/5 blur-3xl md:size-175"
       />
 
-      <AnimatePresence>
-        {visible && (
-          <motion.div
-            key="hero-content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-8 md:px-10 md:py-10"
+      {/* Always in DOM — only opacity/transform change, never mount/unmount (prevents layout shift) */}
+      <motion.div
+        animate={{ opacity: visible ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        aria-hidden={!visible}
+        className="relative mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-8 md:px-10 md:py-10"
+      >
+        <h1 className="font-heading text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] font-medium tracking-[-0.02em] select-none">
+          {heroContent.verbs.map((verb, i) => (
+            <motion.span
+              key={verb}
+              className="block mb-1.25 md:mb-0"
+              animate={visible
+                ? { y: 0, opacity: 1 }
+                : { y: "110%", opacity: 0 }}
+              transition={visible
+                ? { delay: 0.15 + i * 0.12, duration: 0.9, ease: [0.22, 1, 0.36, 1] }
+                : { duration: 0 }}
+            >
+              <span className="inline-block overflow-hidden">
+                {verb}
+                {i === heroContent.verbs.length - 1 && (
+                  <motion.span
+                    className="ml-1 inline-block text-accent"
+                    animate={visible
+                      ? { opacity: 1, scale: 1 }
+                      : { opacity: 0, scale: 0.4 }}
+                    transition={visible
+                      ? { delay: 0.15 + i * 0.12 + 0.6, duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+                      : { duration: 0 }}
+                  >
+                    _
+                  </motion.span>
+                )}
+              </span>
+            </motion.span>
+          ))}
+        </h1>
+
+        <motion.p
+          animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={visible ? { delay: 0.75, duration: 0.7 } : { duration: 0 }}
+          className="max-w-xl text-base text-muted-foreground md:text-lg"
+        >
+          {heroContent.tagline}
+        </motion.p>
+
+        <motion.div
+          animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={visible ? { delay: 0.9, duration: 0.7 } : { duration: 0 }}
+          className="flex flex-col gap-3 sm:flex-row"
+        >
+          <a
+            href={heroContent.primaryCta.href}
+            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5"
           >
-            <h1 className="font-heading text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] font-medium tracking-[-0.02em]">
-              {heroContent.verbs.map((verb, i) => (
-                <motion.span
-                  key={verb}
-                  className="block mb-1.25 md:mb-0"
-                  initial={{ y: "110%", opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{
-                    delay: 0.15 + i * 0.12,
-                    duration: 0.9,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  <span className="inline-block">
-                    {verb}
-                    {i === heroContent.verbs.length - 1 && (
-                      <motion.span
-                        className="ml-1 inline-block text-accent"
-                        initial={{ opacity: 0, scale: 0.4 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          delay: 0.15 + i * 0.12 + 0.6,
-                          duration: 0.5,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                      >
-                        _
-                      </motion.span>
-                    )}
-                  </span>
-                </motion.span>
-              ))}
-            </h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.7 }}
-              className="max-w-xl text-base text-muted-foreground md:text-lg"
-            >
-              {heroContent.tagline}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.7 }}
-              className="flex flex-col gap-3 sm:flex-row"
-            >
-              <a
-                href={heroContent.primaryCta.href}
-                className="group inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5"
-              >
-                {heroContent.primaryCta.label}
-                <ArrowRight
-                  size={16}
-                  weight="bold"
-                  className="transition-transform group-hover:translate-x-0.5"
-                />
-              </a>
-              <a
-                href={heroContent.secondaryCta.href}
-                className="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background/60 px-5 py-3 text-sm font-medium text-foreground backdrop-blur transition-colors hover:border-accent hover:text-accent"
-              >
-                <PaperPlaneTilt size={16} weight="fill" />
-                {heroContent.secondaryCta.label}
-              </a>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {heroContent.primaryCta.label}
+            <ArrowRight
+              size={16}
+              weight="bold"
+              className="transition-transform group-hover:translate-x-0.5"
+            />
+          </a>
+          <a
+            href={heroContent.secondaryCta.href}
+            className="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background/60 px-5 py-3 text-sm font-medium text-foreground backdrop-blur transition-colors hover:border-accent hover:text-accent"
+          >
+            <PaperPlaneTilt size={16} weight="fill" />
+            {heroContent.secondaryCta.label}
+          </a>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

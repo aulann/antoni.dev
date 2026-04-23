@@ -55,7 +55,6 @@ export function Contact() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data: FormData) => {
-    console.log("[contact] submitting", data);
     const res = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -63,12 +62,10 @@ export function Contact() {
     });
 
     if (!res.ok) {
-      console.log("[contact] error", await res.text());
       toast.error("Coś poszło nie tak. Spróbuj ponownie lub napisz bezpośrednio.");
       return;
     }
 
-    console.log("[contact] success");
     toast.success("Dzięki! Odpiszę w ciągu 24h.");
     reset();
   };

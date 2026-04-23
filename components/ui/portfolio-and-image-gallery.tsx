@@ -19,6 +19,7 @@ if (typeof window !== 'undefined') {
 }
 
 function useMergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return useMemo(() => {
     if (refs.every((ref) => ref == null)) return null;
     return (node: T) => {
@@ -30,7 +31,7 @@ function useMergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
         }
       });
     };
-  }, [refs]);
+  }, refs);
 }
 
 function useResponsiveValue(baseValue: number, mobileValue: number) {
@@ -131,15 +132,20 @@ export const RadialScrollGallery = forwardRef<
       setIsMounted(true);
       if (!childRef.current) return;
 
+      let rafId: number;
       const observer = new ResizeObserver((entries) => {
         for (const entry of entries) {
           setChildSize({ w: entry.contentRect.width, h: entry.contentRect.height });
         }
-        ScrollTrigger.refresh();
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
       });
 
       observer.observe(childRef.current);
-      return () => observer.disconnect();
+      return () => {
+        observer.disconnect();
+        cancelAnimationFrame(rafId);
+      };
     }, [childrenCount]);
 
     useGSAP(

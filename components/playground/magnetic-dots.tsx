@@ -32,6 +32,16 @@ export function MagneticDots({ className }: { className?: string }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Cache dark mode — update via MutationObserver instead of querying DOM every frame
+    const darkRef = { current: document.documentElement.classList.contains("dark") };
+    const mo = new MutationObserver(() => {
+      darkRef.current = document.documentElement.classList.contains("dark");
+    });
+    mo.observe(document.documentElement, { attributeFilter: ["class"] });
+
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       canvas.width = rect.width * devicePixelRatio;
@@ -51,16 +61,16 @@ export function MagneticDots({ className }: { className?: string }) {
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
 
-    const tick = () => {
-      const ctx = canvas.getContext("2d");
-      if (!ctx) { rafRef.current = requestAnimationFrame(tick); return; }
+    const IDLE_THRESHOLD = 0.05;
 
+    const tick = () => {
       const dpr = devicePixelRatio;
-      const dark = document.documentElement.classList.contains("dark");
+      const dark = darkRef.current;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const mx = mouse.current.x;
       const my = mouse.current.y;
+      let isIdle = true;
 
       for (const d of dotsRef.current) {
         if (!reduceMotion.current) {
@@ -80,6 +90,10 @@ export function MagneticDots({ className }: { className?: string }) {
           d.vy *= 0.72;
           d.x += d.vx;
           d.y += d.vy;
+
+          if (Math.abs(d.vx) > IDLE_THRESHOLD || Math.abs(d.vy) > IDLE_THRESHOLD) {
+            isIdle = false;
+          }
         }
 
         const pdx = mx - d.x;
@@ -98,16 +112,30 @@ export function MagneticDots({ className }: { className?: string }) {
         ctx.fill();
       }
 
+      // Pause loop when dots are settled and mouse is off-canvas
+      const mouseOff = mx === -999;
+      if (isIdle && mouseOff && !reduceMotion.current) {
+        rafRef.current = 0;
+        return;
+      }
+
       rafRef.current = requestAnimationFrame(tick);
     };
+
+    const startLoop = () => {
+      if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
+    };
+    canvas.addEventListener("mousemove", startLoop);
 
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
       canvas.removeEventListener("mousemove", onMove);
+      canvas.removeEventListener("mousemove", startLoop);
       canvas.removeEventListener("mouseleave", onLeave);
       cancelAnimationFrame(rafRef.current);
       ro.disconnect();
+      mo.disconnect();
     };
   }, [build]);
 
