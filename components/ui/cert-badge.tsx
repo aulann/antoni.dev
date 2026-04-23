@@ -11,6 +11,7 @@ interface CertBadgeProps {
   year: string;
   logo?: string;
   icon?: ReactNode;
+  large?: boolean;
 }
 
 const identityMatrix =
@@ -24,45 +25,18 @@ const minRotate = -0.22;
 const maxScale = 1;
 const minScale = 0.97;
 
-const overlayAnimations = [...Array(10).keys()]
-  .map(
-    (e) => `
-  @keyframes certOverlay${e + 1} {
-    0%   { transform: rotate(${e * 10}deg); }
-    50%  { transform: rotate(${(e + 1) * 10}deg); }
-    100% { transform: rotate(${e * 10}deg); }
-  }`,
-  )
-  .join(" ");
-
-const OVERLAY_COLORS = [
-  "hsl(45, 100%, 60%)",
-  "hsl(30, 100%, 55%)",
-  "hsl(55, 100%, 55%)",
-  "hsl(20, 100%, 60%)",
-  "hsl(233, 85%, 60%)",
-  "hsl(271, 85%, 55%)",
-  "hsl(300, 40%, 45%)",
-  "transparent",
-  "transparent",
-  "white",
-];
-
-export function CertBadge({ code, name, issuer, year, logo, icon }: CertBadgeProps) {
+export function CertBadge({ code, name, issuer, year, logo, icon, large }: CertBadgeProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [firstOverlay, setFirstOverlay] = useState(0);
   const [matrix, setMatrix] = useState(identityMatrix);
   const [currentMatrix, setCurrentMatrix] = useState(identityMatrix);
-  const [disableInOut, setDisableInOut] = useState(true);
-  const [disableAnim, setDisableAnim] = useState(false);
   const [timeoutDone, setTimeoutDone] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     setIsTouch(window.matchMedia("(hover: none), (pointer: coarse)").matches);
   }, []);
 
-  const enterTO = useRef<ReturnType<typeof setTimeout> | null>(null);
   const leaveTO = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const getDims = () => {
@@ -105,17 +79,7 @@ export function CertBadge({ code, name, issuer, year, logo, icon }: CertBadgePro
 
   const onMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
     leaveTO.current.forEach(clearTimeout);
-    setDisableAnim(true);
-    const { left, right, top, bottom } = getDims();
-    const xC = (left + right) / 2;
-    const yC = (top + bottom) / 2;
-    setDisableInOut(false);
-    enterTO.current = setTimeout(() => setDisableInOut(true), 350);
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() =>
-        setFirstOverlay((Math.abs(xC - e.clientX) + Math.abs(yC - e.clientY)) / 1.5),
-      ),
-    );
+    setIsHovered(true);
     const m = getMatrix(e.clientX, e.clientY);
     setMatrix(getOpposite(m, e.clientY, true));
     setTimeoutDone(false);
@@ -123,74 +87,52 @@ export function CertBadge({ code, name, issuer, year, logo, icon }: CertBadgePro
   };
 
   const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    const { left, right, top, bottom } = getDims();
-    const xC = (left + right) / 2;
-    const yC = (top + bottom) / 2;
-    setTimeout(() => setFirstOverlay((Math.abs(xC - e.clientX) + Math.abs(yC - e.clientY)) / 1.5), 150);
     if (timeoutDone) setCurrentMatrix(getMatrix(e.clientX, e.clientY));
   };
 
   const onMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
-    if (enterTO.current) clearTimeout(enterTO.current);
     const opp = getOpposite(matrix, e.clientY);
     setCurrentMatrix(opp);
     setTimeout(() => setCurrentMatrix(identityMatrix), 200);
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        setDisableInOut(false);
-        leaveTO.current[0] = setTimeout(() => setFirstOverlay(-firstOverlay / 4), 150);
-        leaveTO.current[1] = setTimeout(() => setFirstOverlay(0), 300);
-        leaveTO.current[2] = setTimeout(() => {
-          setDisableAnim(false);
-          setDisableInOut(true);
-        }, 500);
-      }),
-    );
+    leaveTO.current[0] = setTimeout(() => setIsHovered(false), 300);
   };
 
   useEffect(() => {
     if (timeoutDone) setMatrix(currentMatrix);
   }, [currentMatrix, timeoutDone]);
 
-  useEffect(() => {
-    const el = document.getElementById("cert-overlay-keyframes");
-    if (el) return;
-    const style = document.createElement("style");
-    style.id = "cert-overlay-keyframes";
-    style.textContent = overlayAnimations;
-    document.head.appendChild(style);
-  }, []);
-
   const cardContent = (
-    <div className="relative flex items-center gap-3">
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/10 overflow-hidden">
+    <div className={`relative flex items-center ${large ? "gap-5 py-2" : "gap-3"}`}>
+      <div className={`flex shrink-0 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 overflow-hidden ${large ? "size-14" : "size-9"}`}>
         {logo ? (
-          <Image src={logo} alt={code} width={36} height={36} className="size-full object-cover" unoptimized />
+          <Image src={logo} alt={code} width={large ? 56 : 36} height={large ? 56 : 36} className="size-full object-cover" unoptimized />
         ) : icon ? (
           icon
         ) : (
-          <Certificate size={18} weight="duotone" className="text-amber-500" />
+          <Certificate size={large ? 26 : 18} weight="duotone" className="text-amber-500" />
         )}
       </div>
-      <div className="flex min-w-0 flex-col gap-0.5">
-        <div className="flex items-center gap-1.5">
-          <span className="font-heading text-sm font-semibold tracking-wide text-foreground md:text-base">
+      <div className="flex min-w-0 flex-col gap-1">
+        <div className="flex items-center gap-2">
+          <span className={`font-heading font-semibold tracking-wide text-foreground ${large ? "text-xl md:text-2xl" : "text-sm md:text-base"}`}>
             {code}
           </span>
-          <SealCheck size={13} weight="fill" className="shrink-0 text-amber-500" />
+          <SealCheck size={large ? 16 : 13} weight="fill" className="shrink-0 text-amber-500" />
           <span className="text-xs text-muted-foreground/60">{year}</span>
         </div>
-        <span className="text-xs text-muted-foreground md:text-sm">{name}</span>
-        <span className="text-[0.7rem] tracking-wide text-muted-foreground/50 uppercase md:text-xs">
+        <span className={`text-muted-foreground ${large ? "text-sm md:text-base" : "text-xs md:text-sm"}`}>{name}</span>
+        <span className={`tracking-wide text-muted-foreground/50 uppercase ${large ? "text-xs" : "text-[0.7rem] md:text-xs"}`}>
           {issuer}
         </span>
       </div>
     </div>
   );
 
-  if (isTouch) {
+  const cardClass = `relative w-full overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 ${large ? "px-6 py-5" : "px-4 py-3"}`;
+
+  if (isTouch || large) {
     return (
-      <div className="relative w-full overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3">
+      <div className={cardClass}>
         {cardContent}
       </div>
     );
@@ -211,46 +153,18 @@ export function CertBadge({ code, name, issuer, year, logo, icon }: CertBadgePro
           transformOrigin: "center center",
           transition: "transform 200ms ease-out",
         }}
-        className="relative w-full overflow-hidden rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3"
+        className={cardClass}
       >
-        {/* Holographic overlay */}
+        {/* Hover glow */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 overflow-hidden rounded-xl"
-          style={{ mixBlendMode: "overlay" }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 100 100"
-            className="absolute inset-0 h-full w-full"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <filter id="certBlur">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="4" />
-              </filter>
-            </defs>
-            {OVERLAY_COLORS.map((color, i) => (
-              <g
-                key={i}
-                style={{
-                  transform: `rotate(${firstOverlay + i * 10}deg)`,
-                  transformOrigin: "center center",
-                  transition: !disableInOut ? "transform 200ms ease-out" : "none",
-                  animation: disableAnim ? "none" : `certOverlay${i + 1} 5s infinite`,
-                  willChange: "transform",
-                }}
-              >
-                <polygon
-                  points="0,0 100,100 100,0 0,100"
-                  fill={color}
-                  filter="url(#certBlur)"
-                  opacity="0.55"
-                />
-              </g>
-            ))}
-          </svg>
-        </div>
+          className="pointer-events-none absolute inset-0 rounded-xl"
+          style={{
+            background: "radial-gradient(ellipse at 30% 50%, hsl(45 100% 60% / 0.12) 0%, transparent 70%)",
+            opacity: isHovered ? 1 : 0,
+            transition: "opacity 300ms ease-out",
+          }}
+        />
 
         <div className="relative">
           {cardContent}

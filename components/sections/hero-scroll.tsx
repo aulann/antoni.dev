@@ -95,7 +95,7 @@ function HeroCardContent({ visible }: { visible: boolean }) {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute top-1/2 left-1/2 size-80 -translate-1/2 rounded-full bg-accent/5 blur-3xl md:size-175"
+        className="pointer-events-none absolute top-1/2 left-1/2 size-80 -translate-1/2 rounded-full bg-accent/5 blur-xl md:blur-3xl md:size-175"
       />
 
       {/* Always in DOM — only opacity/transform change, never mount/unmount (prevents layout shift) */}
@@ -109,30 +109,31 @@ function HeroCardContent({ visible }: { visible: boolean }) {
           {heroContent.verbs.map((verb, i) => (
             <motion.span
               key={verb}
-              className="block mb-1.25 md:mb-0"
+              className="block mb-1.25 md:mb-0 will-change-transform"
               animate={visible
                 ? { y: 0, opacity: 1 }
-                : { y: "110%", opacity: 0 }}
+                : { y: 28, opacity: 0 }}
               transition={visible
-                ? { delay: 0.15 + i * 0.12, duration: 0.9, ease: [0.22, 1, 0.36, 1] }
+                ? {
+                    delay: 0.2 + i * 0.15,
+                    duration: 0.7,
+                    ease: [0.22, 1, 0.36, 1],
+                    opacity: { duration: 0.3, delay: 0.2 + i * 0.15 },
+                  }
                 : { duration: 0 }}
             >
-              <span className="inline-block overflow-hidden">
-                {verb}
-                {i === heroContent.verbs.length - 1 && (
-                  <motion.span
-                    className="ml-1 inline-block text-accent"
-                    animate={visible
-                      ? { opacity: 1, scale: 1 }
-                      : { opacity: 0, scale: 0.4 }}
-                    transition={visible
-                      ? { delay: 0.15 + i * 0.12 + 0.6, duration: 0.5, ease: [0.22, 1, 0.36, 1] }
-                      : { duration: 0 }}
-                  >
-                    _
-                  </motion.span>
-                )}
-              </span>
+              {verb}
+              {i === heroContent.verbs.length - 1 && (
+                <motion.span
+                  className="ml-1 inline-block text-accent"
+                  animate={visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.4 }}
+                  transition={visible
+                    ? { delay: 0.2 + i * 0.15 + 0.45, duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+                    : { duration: 0 }}
+                >
+                  _
+                </motion.span>
+              )}
             </motion.span>
           ))}
         </h1>
@@ -163,7 +164,7 @@ function HeroCardContent({ visible }: { visible: boolean }) {
           </a>
           <a
             href={heroContent.secondaryCta.href}
-            className="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background/60 px-5 py-3 text-sm font-medium text-foreground backdrop-blur transition-colors hover:border-accent hover:text-accent"
+            className="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background/80 px-5 py-3 text-sm font-medium text-foreground sm:bg-background/60 sm:backdrop-blur transition-colors hover:border-accent hover:text-accent"
           >
             <PaperPlaneTilt size={16} weight="fill" />
             {heroContent.secondaryCta.label}
