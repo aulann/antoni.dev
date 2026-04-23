@@ -7,12 +7,12 @@ export function TechStack() {
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <div className="mb-16 flex flex-col gap-3">
           <span className="inline-flex w-max items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-[0.7rem] tracking-[0.25em] text-muted-foreground uppercase">
-            Tech stack
+            Stack
           </span>
-          <h2 className="font-heading max-w-2xl text-3xl leading-tight font-medium tracking-tight sm:text-4xl md:text-6xl">
-            Hardware, web, backend,
+          <h2 className="font-heading max-w-2xl text-3xl leading-tight font-medium tracking-[0.01em] sm:text-4xl md:text-6xl">
+            Co potrafię?
             <br />
-            <span className="text-accent">AI i automatyzacje.</span>
+            <span className="text-accent">Sprawdź sam.</span>
           </h2>
           <p className="max-w-lg text-sm text-muted-foreground md:text-base">
             <span className="hidden md:inline">Najedź na ikonę</span>

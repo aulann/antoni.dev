@@ -2,9 +2,34 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useAnimationFrame, useMotionValue, useSpring } from "motion/react";
+import { Star } from "@phosphor-icons/react";
 import * as PhosphorIcons from "@phosphor-icons/react";
 import * as SimpleIcons from "@icons-pack/react-simple-icons";
 import type { TechItem } from "@/lib/content/tech";
+
+function StarRating({ level, color }: { level: number; color: string }) {
+  return (
+    <div className="flex gap-0.5">
+      {Array.from({ length: 5 }, (_, i) => {
+        const full = level >= i + 1;
+        const half = !full && level >= i + 0.5;
+        return (
+          <span key={i} className="relative" style={{ width: 11, height: 11 }}>
+            <Star size={11} weight="regular" className="absolute inset-0 text-border" />
+            {(full || half) && (
+              <span
+                className="absolute inset-0 overflow-hidden"
+                style={{ width: full ? "100%" : "52%" }}
+              >
+                <Star size={11} weight="fill" style={{ color }} />
+              </span>
+            )}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
 
 type Props = {
   item: TechItem;
@@ -166,22 +191,11 @@ export function TechIcon({ item, index }: Props) {
         transition={{ duration: 0.18, ease: "easeOut" }}
         aria-hidden
       >
-        <div className="mb-1.5 flex items-center justify-between gap-1">
+        <div className="mb-1.5 flex items-center justify-between gap-2">
           <span className="truncate text-xs font-medium text-foreground">
             {item.name}
           </span>
-          <span className="shrink-0 text-xs tabular-nums" style={{ color: ringColor }}>
-            {item.level}%
-          </span>
-        </div>
-        <div className="h-1 w-full overflow-hidden rounded-full bg-border">
-          <motion.div
-            className="h-full rounded-full"
-            style={{ backgroundColor: ringColor }}
-            initial={{ width: 0 }}
-            animate={showBar ? { width: `${item.level}%` } : { width: 0 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-          />
+          <StarRating level={item.level} color={ringColor} />
         </div>
         <p className="mt-2 text-[0.73rem] leading-snug text-muted-foreground">
           {item.note}

@@ -1,9 +1,9 @@
 export type TechItem = {
   name: string;
-  simpleIcon?: string;  // @icons-pack/react-simple-icons key e.g. "SiReact"
-  brandColor?: string;  // hex brand color
-  phosphorIcon?: string; // fallback Phosphor icon if no simpleIcon
-  level: number;
+  simpleIcon?: string;
+  brandColor?: string;
+  phosphorIcon?: string;
+  level: number; // 0–5, step 0.5
   note: string;
 };
 
@@ -11,7 +11,7 @@ export type TechGroup = {
   id: string;
   label: string;
   eyebrow: string;
-  categoryIcon: string; // Phosphor icon name for the group header
+  categoryIcon: string;
   items: TechItem[];
 };
 
@@ -22,27 +22,26 @@ export const techGroups: TechGroup[] = [
     eyebrow: "01",
     categoryIcon: "Desktop",
     items: [
-      { name: "Składanie PC", phosphorIcon: "Desktop", level: 92, note: "Dobór komponentów, overclocking, diagnostyka." },
-      { name: "CPU / GPU", phosphorIcon: "Cpu", level: 88, note: "Intel, AMD — architektura i chłodzenie." },
-      { name: "Sieci LAN", phosphorIcon: "Network", level: 75, note: "Kablowanie, switching, podstawy routingu." },
-      { name: "Cisco", simpleIcon: "SiCisco", brandColor: "#1BA0D7", level: 62, note: "Packet Tracer, CLI, CCNA w toku." },
-      { name: "Raspberry Pi", simpleIcon: "SiRaspberrypi", brandColor: "#A22846", level: 60, note: "Linux, GPIO, projekty IoT." },
+      { name: "Składanie PC", phosphorIcon: "Desktop", level: 5, note: "Dobór komponentów pod budżet, montaż, diagnostyka i naprawa." },
+      { name: "Sieci LAN", phosphorIcon: "Network", level: 3.5, note: "Konfiguracja routerów, switchy, VLAN-ów." },
+      { name: "Okablowanie", phosphorIcon: "Cable", level: 3, note: "Skrętkowanie, panel krosowy, standardy okablowania strukturalnego." },
+      { name: "Serwery", phosphorIcon: "HardDrive", level: 3, note: "DHCP, DNS, Active Directory, Apache — konfiguracja i zarządzanie." },
+      { name: "Wirtualizacja", phosphorIcon: "StackSimple", level: 2, note: "VirtualBox, VMware, WSL — instalacja i uruchamianie maszyn wirtualnych." },
     ],
   },
   {
     id: "frontend",
-    label: "Frontend",
+    label: "Frontend & Języki",
     eyebrow: "02",
     categoryIcon: "MonitorPlay",
     items: [
-      { name: "HTML", simpleIcon: "SiHtml5", brandColor: "#E34F26", level: 90, note: "Semantyka, dostępność, SEO." },
-      { name: "CSS", simpleIcon: "SiCss", brandColor: "#1572B6", level: 88, note: "Flexbox, grid, animacje, custom properties." },
-      { name: "JavaScript", simpleIcon: "SiJavascript", brandColor: "#F7DF1E", level: 82, note: "ES2024, async/await, DOM manipulation." },
-      { name: "TypeScript", simpleIcon: "SiTypescript", brandColor: "#3178C6", level: 76, note: "Typy, generyki, strict mode." },
-      { name: "React", simpleIcon: "SiReact", brandColor: "#61DAFB", level: 80, note: "Hooks, context, custom hooks, React 19." },
-      { name: "Next.js", simpleIcon: "SiNextdotjs", brandColor: "#e2e8f0", level: 78, note: "App Router, SSR, API routes, Turbopack." },
-      { name: "Tailwind CSS", simpleIcon: "SiTailwindcss", brandColor: "#06B6D4", level: 85, note: "Utility-first, custom tokens, responsive." },
-      { name: "shadcn/ui", phosphorIcon: "Shapes", level: 80, note: "Radix primitives, customizacja, composability." },
+      { name: "HTML / CSS", simpleIcon: "SiHtml5", brandColor: "#E34F26", level: 4.5, note: "Semantyka, Flexbox, Grid, animacje, custom properties." },
+      { name: "JavaScript", simpleIcon: "SiJavascript", brandColor: "#F7DF1E", level: 3.5, note: "ES2024, async/await, DOM manipulation." },
+      { name: "TypeScript", simpleIcon: "SiTypescript", brandColor: "#3178C6", level: 2.5, note: "Typy, interfejsy, strict mode." },
+      { name: "React / Next.js", simpleIcon: "SiReact", brandColor: "#61DAFB", level: 3.5, note: "App Router, komponenty, hooki, SSR." },
+      { name: "Tailwind CSS", simpleIcon: "SiTailwindcss", brandColor: "#06B6D4", level: 4.5, note: "Utility-first, custom tokeny, responsive design." },
+      { name: "C++", simpleIcon: "SiCplusplus", brandColor: "#00599C", level: 3.5, note: "Zmienne, pętle, funkcje, klasy — szkoła + własna nauka." },
+      { name: "Python", simpleIcon: "SiPython", brandColor: "#3776AB", level: 1.5, note: "Podstawy składni, aktywnie się uczę." },
     ],
   },
   {
@@ -51,10 +50,9 @@ export const techGroups: TechGroup[] = [
     eyebrow: "03",
     categoryIcon: "Database",
     items: [
-      { name: "Supabase", simpleIcon: "SiSupabase", brandColor: "#3ECF8E", level: 78, note: "Auth, Postgres, Storage, RLS, Edge Functions." },
-      { name: "PostgreSQL", simpleIcon: "SiPostgresql", brandColor: "#4169E1", level: 70, note: "Schema design, relacje, indeksy, RLS." },
-      { name: "Node.js", simpleIcon: "SiNodedotjs", brandColor: "#339933", level: 65, note: "Express, API routes, middleware." },
-      { name: "REST API", phosphorIcon: "ArrowsLeftRight", level: 74, note: "Projektowanie endpointów, auth, rate limiting." },
+      { name: "SQL", phosphorIcon: "Database", level: 2, note: "Proste zapytania, tworzenie tabel i baz — PostgreSQL, XAMPP." },
+      { name: "Supabase", simpleIcon: "SiSupabase", brandColor: "#3ECF8E", level: 3, note: "Auth, Storage, RLS, integracja z Next.js." },
+      { name: "API Integration", phosphorIcon: "ArrowsLeftRight", level: 3, note: "Podłączanie zewnętrznych API — fetch, REST." },
     ],
   },
   {
@@ -63,10 +61,10 @@ export const techGroups: TechGroup[] = [
     eyebrow: "04",
     categoryIcon: "Sparkle",
     items: [
-      { name: "Claude API", simpleIcon: "SiAnthropic", brandColor: "#D4A27F", level: 80, note: "Integracja LLM, tool use, streaming." },
-      { name: "OpenAI", phosphorIcon: "Brain", level: 72, note: "Chat completions, embeddings, fine-tuning." },
-      { name: "n8n", simpleIcon: "SiN8n", brandColor: "#EA4B71", level: 82, note: "Workflow automation, integracje, webhooks." },
-      { name: "Make", simpleIcon: "SiMake", brandColor: "#6D00CC", level: 65, note: "Scenariusze, integracje, automatyzacje no-code." },
+      { name: "n8n", simpleIcon: "SiN8n", brandColor: "#EA4B71", level: 4.5, note: "Workflow automation, integracje, webhooks, złożone scenariusze." },
+      { name: "Prompt Engineering", phosphorIcon: "ChatText", level: 4, note: "Budowanie skutecznych promptów, context management, chain-of-thought." },
+      { name: "Claude / OpenAI", simpleIcon: "SiAnthropic", brandColor: "#D4A27F", level: 3, note: "Integracja LLM do kodu, streaming, tool use." },
+      { name: "Lokalne modele", phosphorIcon: "Brain", level: 4, note: "Instalacja i uruchamianie modeli AI lokalnie na PC." },
     ],
   },
   {
@@ -75,11 +73,10 @@ export const techGroups: TechGroup[] = [
     eyebrow: "05",
     categoryIcon: "Terminal",
     items: [
-      { name: "Linux", simpleIcon: "SiLinux", brandColor: "#FCC624", level: 70, note: "CLI, bash scripting, konfiguracja systemu." },
-      { name: "Docker", simpleIcon: "SiDocker", brandColor: "#2496ED", level: 58, note: "Dockerfile, compose, podstawy konteneryzacji." },
-      { name: "Git", simpleIcon: "SiGit", brandColor: "#F05032", level: 80, note: "Branching, rebase, pull requesty." },
-      { name: "Vercel", simpleIcon: "SiVercel", brandColor: "#e2e8f0", level: 82, note: "Deploy, environment vars, preview links." },
-      { name: "VS Code", simpleIcon: "SiVscodium", brandColor: "#007ACC", level: 88, note: "Extensions, debugger, multi-cursor." },
+      { name: "VS Code", simpleIcon: "SiVscodium", brandColor: "#007ACC", level: 5, note: "Główne IDE — extensions, debugger, multi-cursor, snippety." },
+      { name: "Git", simpleIcon: "SiGit", brandColor: "#F05032", level: 4, note: "Branching, merge, rebase, pull requesty." },
+      { name: "Linux", simpleIcon: "SiLinux", brandColor: "#FCC624", level: 3, note: "CLI, bash, konfiguracja systemu, podstawy administracji." },
+      { name: "Vercel", simpleIcon: "SiVercel", brandColor: "#e2e8f0", level: 2, note: "Deploy, environment vars, preview links." },
     ],
   },
 ];

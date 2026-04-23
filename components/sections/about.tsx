@@ -87,7 +87,7 @@ function TimelineBlock() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
-            className="text-center text-[0.6rem] uppercase tracking-widest font-medium text-muted-foreground"
+            className="text-center text-[0.6rem] uppercase tracking-widest font-light text-muted-foreground"
           >
             {item.year}
           </motion.span>
@@ -135,7 +135,7 @@ function TimelineBlock() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.4, delay: 0.3 + i * 0.08 }}
-            className="px-1 text-center text-xs font-semibold text-foreground leading-snug"
+            className="px-1 text-center text-xs font-normal text-foreground leading-snug"
           >
             {item.title}
           </motion.p>
@@ -168,10 +168,10 @@ function TimelineBlock() {
               />
             </div>
             <div className="flex flex-col gap-0.5 -mt-0.5">
-              <span className="text-[0.6rem] uppercase tracking-widest font-medium text-muted-foreground">
+              <span className="text-[0.6rem] uppercase tracking-widest font-light text-muted-foreground">
                 {item.year}
               </span>
-              <p className="text-sm font-semibold text-foreground leading-snug">{item.title}</p>
+              <p className="text-sm font-normal text-foreground leading-snug">{item.title}</p>
               <p className="text-xs text-muted-foreground leading-snug mt-0.5">{item.desc}</p>
             </div>
           </motion.div>
