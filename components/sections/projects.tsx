@@ -37,9 +37,9 @@ export function Projects() {
             transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="font-heading max-w-2xl text-3xl leading-tight font-medium tracking-tight sm:text-4xl md:text-6xl"
           >
-            Wybrane
+            Moje
             <br />
-            <span className="text-accent">realizacje.</span>
+            <span className="text-accent">projekty.</span>
           </motion.h2>
         </div>
 
@@ -56,7 +56,6 @@ export function Projects() {
           ))}
         </div>
 
-        <Capabilities inView={inView} />
       </div>
     </section>
   );
@@ -159,6 +158,11 @@ function ProjectCard({ project }: { project: Project }) {
             : undefined
         }
       >
+        {project.inProgress && (
+          <div className="absolute top-3 right-3 z-10 rounded-full border border-amber-500/40 bg-amber-500/10 px-2.5 py-1 text-[0.65rem] font-medium tracking-wide text-amber-600 backdrop-blur-sm">
+            W trakcie
+          </div>
+        )}
         {project.heroVideo && (
           <video
             ref={videoRef}
@@ -203,12 +207,6 @@ function ProjectCard({ project }: { project: Project }) {
           </>
         )}
 
-        {project.liveUrl && (
-          <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full border border-border/60 bg-card/80 px-3 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-sm">
-            <span className="size-2 animate-pulse rounded-full bg-green-400" />
-            live
-          </div>
-        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-4 p-6">
@@ -236,7 +234,7 @@ function ProjectCard({ project }: { project: Project }) {
               onClick={(e) => e.stopPropagation()}
               className="inline-flex items-center gap-2 text-base font-medium text-accent transition-opacity hover:opacity-70"
             >
-              Zobacz live
+              Zobacz stronę
               <ArrowUpRight size={14} />
             </a>
           </div>

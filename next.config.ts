@@ -1,8 +1,16 @@
 import type { NextConfig } from "next";
 
-const PRODUCTION_ORIGIN = "https://antoni-portfolio.vercel.app";
+const PRODUCTION_ORIGIN = "https://aulan.pl";
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
+  experimental: {
+    optimizePackageImports: [
+      "@phosphor-icons/react",
+      "@icons-pack/react-simple-icons",
+      "lucide-react",
+    ],
+  },
   images: {
     remotePatterns: [
       {

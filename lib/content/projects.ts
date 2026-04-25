@@ -17,6 +17,7 @@ export type Project = {
   heroVideo?: string;      // main scroll-through video (shown large at top)
   featureVideos?: ProjectVideo[]; // interactive elements videos
   accentColor: string;
+  inProgress?: boolean;
 };
 
 export type Capability = {
@@ -28,10 +29,11 @@ export const projects: Project[] = [
   {
     slug: "la-fontana",
     name: "La Fontana Pizza Napoletana",
-    tagline: "Strona dla pizzerii z certyfikatem AVPN",
+    tagline: "Strona dla popularnej pizzerii w Tychach",
     description:
-      "Kompletna strona firmowa z menu, galerią i integracją z Google Business Profile. Certyfikowana przez Associazione Verace Pizza Napoletana (#739).",
-    stack: ["Next.js 14", "Supabase", "Tailwind CSS", "Vercel"],
+      "Strona dla pizzerii z menu, galerią, sekcją z kontaktem i mapą dojazdu. Profesjonalno-minimalistyczny design.",
+    stack: ["Next.js 14", "Tailwind CSS"],
+    inProgress: true,
     liveUrl: "https://la-fontana-tau.vercel.app",
     image: "/projects/la-fontana/images/hero-image.png",
     accentColor: "#c8401b",
@@ -39,10 +41,10 @@ export const projects: Project[] = [
   {
     slug: "bd-design",
     name: "BD Design",
-    tagline: "Portfolio dla grafika specjalizującego się w brandingu",
+    tagline: "Portfolio dla grafika specjalizującego się w projektowaniu odzieży",
     description:
-      "Nowoczesne portfolio prezentujące realizacje z zakresu odzieży reklamowej i gadżetów promocyjnych. Minimalistyczny design z efektami hover i płynnymi animacjami scroll-driven.",
-    stack: ["Next.js 14", "Tailwind CSS", "GSAP", "Vercel"],
+      "Strona dla grafika specjalizującego się w projektowaniu odzieży dla klubów piłkarskich i dodatków. Customowe animacje, profesjonalny design.",
+    stack: ["Next.js 14", "Tailwind CSS", "GSAP"],
     liveUrl: "https://bddesign.one/",
     image: "/projects/bd-design/images/hero-image.png",
     gallery: [
@@ -62,17 +64,17 @@ export const projects: Project[] = [
       {
         src: "/projects/bd-design/videos/why-choose-me.mp4",
         label: "Sekcja 'Dlaczego ja'",
-        description: "Najechanie na element rozsuwa lewy akcent i pojawia się opis. Custom cursor zmienia kolor ringa w tej sekcji.",
+        description: "Najechanie na element rozsuwa dolny element z opisem.",
       },
       {
         src: "/projects/bd-design/videos/footer.mp4",
         label: "Footer i proces współpracy",
-        description: "Trzykrokowy proces współpracy z animacjami hover na kartach i linkiem CTA do Instagrama.",
+        description: "Trzykrokowy proces współpracy z animacjami hover na kartach i linkiem do Instagrama.",
       },
       {
         src: "/projects/bd-design/videos/scroll-mobile.mp4",
         label: "Wersja mobilna",
-        description: "Responsywny layout na telefonie — hamburger z animacją clip-path, efekt scramble liter logo i stagger linków menu.",
+        description: "Responsywność na telefonie — dostosowany układ na telefonie.",
         portrait: true,
       },
     ],

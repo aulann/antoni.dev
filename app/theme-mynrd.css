@@ -55,31 +55,6 @@
   --font-serif:   var(--font-playfair), ui-serif, Georgia, serif;
 }
 
-.dark {
-  --background:          #0e1a1b;
-  --foreground:          #f2ede4;
-  --card:                #152223;
-  --card-foreground:     #f2ede4;
-  --popover:             #152223;
-  --popover-foreground:  #f2ede4;
-  --primary:             #f2ede4;
-  --primary-foreground:  #0e1a1b;
-  --secondary:           #1c3032;
-  --secondary-foreground:#f2ede4;
-  --muted:               #1c3032;
-  --muted-foreground:    #9e9484;
-  --accent:              #4a9ea5;
-  --accent-foreground:   #0e1a1b;
-  --accent-hover:        #5ab4bc;
-  --border:              #1c3032;
-  --input:               #1c3032;
-  --ring:                #4a9ea5;
-
-  --font-sans:    var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-playfair), ui-serif, Georgia, serif;
-  --font-serif:   var(--font-playfair), ui-serif, Georgia, serif;
-}
-
 /* ── Base overrides ─────────────────────────────────────────── */
 @layer base {
   html {
@@ -148,18 +123,6 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #6b6355;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #0e1a1b;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #1c3032;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #4a9ea5;
 }
 
 /* ── Selection ───────────────────────────────────────────────── */

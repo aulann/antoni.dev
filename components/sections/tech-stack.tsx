@@ -17,7 +17,7 @@ export function TechStack() {
           <p className="max-w-lg text-sm text-muted-foreground md:text-base">
             <span className="hidden md:inline">Najedź na ikonę</span>
             <span className="md:hidden">Dotknij ikonę</span>
-            {" "}żeby zobaczyć poziom i opis. Każda to kawałek mojego warsztatu.
+            {" "}żeby zobaczyć poziom i opis. Ciągle uczę się czegoś nowego.
           </p>
         </div>
 

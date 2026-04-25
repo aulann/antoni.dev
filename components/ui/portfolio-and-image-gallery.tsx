@@ -73,6 +73,7 @@ export interface RadialScrollGalleryProps
   onItemSelect?: (index: number) => void;
   direction?: 'ltr' | 'rtl';
   disabled?: boolean;
+  maxRotation?: number;
 }
 
 export const RadialScrollGallery = forwardRef<
@@ -91,6 +92,7 @@ export const RadialScrollGallery = forwardRef<
       onItemSelect,
       direction = 'ltr',
       disabled = false,
+      maxRotation = 360,
       ...rest
     },
     ref
@@ -176,7 +178,7 @@ export const RadialScrollGallery = forwardRef<
         );
 
         gsap.to(containerRef.current, {
-          rotation: 360,
+          rotation: maxRotation,
           ease: 'none',
           scrollTrigger: {
             trigger: pinRef.current,
@@ -187,7 +189,7 @@ export const RadialScrollGallery = forwardRef<
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               const count = childrenCountRef.current;
-              const R = self.progress * 360;
+              const R = self.progress * maxRotation;
               const topAngle = ((270 - R) % 360 + 360) % 360;
               const nearest = Math.round((topAngle / 360) * count) % count;
               setAutoHoverIndex(nearest);
@@ -202,7 +204,7 @@ export const RadialScrollGallery = forwardRef<
         // GSAP writes rotation only on this inner div → no conflict on re-renders.
         const counterEls = containerRef.current.querySelectorAll('.gsap-counter-rotate');
         gsap.to(counterEls, {
-          rotation: -360,
+          rotation: -maxRotation,
           ease: 'none',
           transformOrigin: 'center center',
           scrollTrigger: {
@@ -216,7 +218,7 @@ export const RadialScrollGallery = forwardRef<
       },
       {
         scope: pinRef,
-        dependencies: [scrollDuration, currentRadius, startTrigger, childrenCount],
+        dependencies: [scrollDuration, currentRadius, startTrigger, childrenCount, maxRotation],
       }
     );
 

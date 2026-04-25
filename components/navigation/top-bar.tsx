@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { List, X } from "@phosphor-icons/react";
 import { navLinks, brand } from "@/lib/content/nav";
-import { ThemeToggle } from "./theme-toggle";
 import { Monogram } from "@/components/brand/monogram";
 import { cn } from "@/lib/utils";
 
@@ -66,17 +65,14 @@ export function TopBar() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <button
-              type="button"
-              onClick={() => setMenuOpen(true)}
-              className="inline-flex size-9 items-center justify-center rounded-full border border-border/70 bg-background/60 text-foreground backdrop-blur transition-colors hover:border-accent hover:text-accent lg:hidden"
-              aria-label="Otwórz menu"
-            >
-              <List size={18} weight="bold" />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            className="inline-flex size-9 items-center justify-center rounded-full border border-border/70 bg-background/60 text-foreground backdrop-blur transition-colors hover:border-accent hover:text-accent lg:hidden"
+            aria-label="Otwórz menu"
+          >
+            <List size={18} weight="bold" />
+          </button>
         </nav>
       </motion.header>
 

@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import {
   EnvelopeSimple,
   GithubLogo,
-  LinkedinLogo,
   PaperPlaneTilt,
   ArrowRight,
 } from "@phosphor-icons/react";
@@ -31,15 +30,9 @@ const channels = [
   },
   {
     label: "GitHub",
-    value: "github.com",
-    href: "#",
+    value: "github.com/aulann",
+    href: "https://github.com/aulann",
     icon: GithubLogo,
-  },
-  {
-    label: "LinkedIn",
-    value: "linkedin.com",
-    href: "#",
-    icon: LinkedinLogo,
   },
 ];
 
@@ -99,8 +92,8 @@ export function Contact() {
                 transition={{ duration: 0.6, delay: 0.16 }}
                 className="text-sm leading-relaxed text-muted-foreground md:text-base"
               >
-                Masz projekt, pytanie albo po prostu chcesz pogadać o technologii?
-                Odpisuję zazwyczaj tego samego dnia.
+                Masz pomysł, potrzebujesz strony, lub potrzebujesz pomocy?
+                Odpisuję tego samego dnia.
               </motion.p>
             </div>
 
@@ -110,10 +103,14 @@ export function Contact() {
               transition={{ duration: 0.6, delay: 0.24 }}
               className="flex flex-col gap-3"
             >
-              {channels.map(({ label, value, href, icon: Icon }) => (
+              {channels.map(({ label, value, href, icon: Icon }) => {
+                const isExternal = href.startsWith("http");
+                return (
                 <a
                   key={label}
                   href={href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
                   className="group flex items-center gap-4 rounded-xl border border-border/50 bg-muted/30 px-4 py-3 transition-colors hover:border-accent/40 hover:bg-accent/5"
                 >
                   <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/50 bg-muted/50 transition-colors group-hover:border-accent/40 group-hover:bg-accent/10">
@@ -125,7 +122,8 @@ export function Contact() {
                   </div>
                   <ArrowRight size={14} className="ml-auto shrink-0 text-muted-foreground/30 transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
                 </a>
-              ))}
+                );
+              })}
             </motion.div>
           </div>
 
