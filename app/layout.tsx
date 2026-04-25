@@ -3,6 +3,7 @@ import { Geist_Mono, Playfair_Display, DM_Sans } from "next/font/google";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { BackNavProvider } from "@/components/providers/back-nav-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -98,6 +99,7 @@ export default function RootLayout({
             </a>
             {children}
             <Toaster />
+            <Analytics />
           </BackNavProvider>
         </LenisProvider>
       </body>
